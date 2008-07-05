@@ -6,17 +6,19 @@
 
 
 
-module Log
-	module Converter
-		def default_type
-			:info
-		end
-
-		def convert(obj)
-			case obj
-				when Entry:     obj
-				when Exception:	Entry.new(obj.message.chomp, :error, obj.backtrace)
-				else            Entry.new(obj.to_str.chomp, default_type)
+module SilverPlatter
+	module Log
+		module Converter
+			def default_type
+				:info
+			end
+	
+			def convert(obj)
+				case obj
+					when Entry:     obj
+					when Exception:	Entry.new(obj.message.chomp, :error, obj.backtrace)
+					else            Entry.new(obj.to_str.chomp, default_type)
+				end
 			end
 		end
 	end
