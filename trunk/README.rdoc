@@ -41,5 +41,5 @@ FIXME
 
 
 ==Links
-SilverPlatter-IRCs home:: http://silverplatter.rubyforge.org/log
+SilverPlatter-Log's home:: http://silverplatter.rubyforge.org/log
 The project site:: http://rubyforge.org/projects/silverplatter

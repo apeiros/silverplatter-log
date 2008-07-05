@@ -117,6 +117,14 @@ module BoneSplitter
 		}.all? # map first so we get all messages at once
 	end
 	
+	# Add a lib as present. Use this to fake existence of a lib if you have
+	# an in-place substitute for it, like e.g. RDiscount for Markdown.
+	def has_lib!(*names)
+		names.each { |name|
+			BoneSplitter.libs[name] = true
+		}
+	end
+	
 	def manifest(mani=Project.meta.manifest)
 		if File.exist?(mani) then
 			File.read(mani).split(/\n/)
@@ -147,8 +155,16 @@ module BoneSplitter
 	# requires that 'readme' is a file in markdown format and that Markdown exists
 	def extract_summary(file=Project.meta.readme)
 		return nil unless File.readable?(file)
-		return "" unless lib?(%w[hpricot markdown], "Requires %s to extract the summary")
-		(Hpricot(Markdown.new(File.read(file)).to_html)/"h2[text()=Summary]").first.next_sibling.inner_text
+		return nil unless lib?('hpricot', "Requires %s to extract the summary")
+		html = case File.extname(file)
+			when '.rdoc'
+				return nil unless lib?('rdoc/markup/to_html', "Requires %s to extract the summary")
+				RDoc::Markup::ToHtml.new.convert(File.read('README.rdoc'))
+			when '.markdown'
+				return nil unless lib?('markdown', "Requires %s to extract the summary")
+				Markdown.new(File.read(file)).to_html
+		end
+		(Hpricot(html)/"h2[text()=Summary]").first.next_sibling.inner_text.strip
 	rescue => e
 		warn "Failed extracting the summary: #{e}"
 		nil
@@ -157,8 +173,16 @@ module BoneSplitter
 	# requires that 'readme' is a file in markdown format and that Markdown exists
 	def extract_description(file=Project.meta.readme)
 		return nil unless File.readable?(file)
-		return "" unless lib?(%w[hpricot markdown], "Requires %s to extract the description")
-		(Hpricot(Markdown.new(File.read(file)).to_html)/"h2[text()=Description]").first.next_sibling.inner_text
+		return nil unless lib?('hpricot', "Requires %s to extract the summary")
+		html = case File.extname(file)
+			when '.rdoc'
+				return nil unless lib?('rdoc/markup/to_html', "Requires %s to extract the summary")
+				RDoc::Markup::ToHtml.new.convert(File.read('README.rdoc'))
+			when '.markdown'
+				return nil unless lib?('markdown', "Requires %s to extract the summary")
+				Markdown.new(File.read(file)).to_html
+		end
+		(Hpricot(html)/"h2[text()=Description]").first.next_sibling.inner_text.strip
 	rescue => e
 		warn "Failed extracting the description: #{e}"
 		nil

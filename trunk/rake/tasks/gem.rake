@@ -36,6 +36,22 @@ namespace :gem do
 
 	# Prerequisites met
 	else
+		Project.gem.name                  ||= Project.meta.name
+		Project.gem.version               ||= Project.meta.version
+		Project.gem.summary               ||= Project.meta.summary
+		Project.gem.description           ||= Project.meta.description
+		Project.gem.authors               ||= Project.meta.authors || Array(Project.meta.author)
+		Project.gem.email                 ||= Project.meta.email
+		Project.gem.homepage              ||= Project.meta.website
+		Project.gem.rubyforge_project     ||= (Project.rubyforge && Project.rubyforge.name) || Project.meta.name
+		Project.gem.files                 ||= manifest()
+		Project.gem.executables           ||= Array(Project.gem.executable)
+		Project.gem.extensions            ||= Project.gem.files.grep %r/extconf\.rb$/
+		Project.gem.bin_dir               ||= "bin"
+	
+		Project.gem.rdoc_options          ||= Project.rdoc && Project.rdoc.options
+		Project.gem.extra_rdoc_files      ||= Project.rdoc && Project.rdoc.extra_files
+		Project.gem.rdoc_options          ||= Project.rdoc && Project.rdoc.options
 		Project.gem.__finalize__
 		Project.gem.spec = gem_spec(Project.gem)
 

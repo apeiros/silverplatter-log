@@ -23,6 +23,7 @@ abort("Requires rake version #{REQUIRED_RAKE_VERSION}") unless has_version?(RAKE
 unless lib?('markdown') then
 	if lib?('rdiscount') then
 		Markdown = RDiscount
+		has_lib!('markdown') # fake it
 	end
 end
 
@@ -51,10 +52,10 @@ Project.meta = ProjectClass.new({
 	:bugtracker       => nil,
 	:feature_requests => nil,
 	:irc              => "irc://freenode.org/#silverplatter",
-	:release_notes    => "NEWS.markdown",
-	:changelog        => "CHANGELOG.markdown",
-	:todo             => "TODO.markdown",
-	:readme           => "README.markdown",
+	:release_notes    => "NEWS.rdoc",
+	:changelog        => "CHANGELOG.rdoc",
+	:todo             => "TODO.rdoc",
+	:readme           => "README.rdoc",
 	:manifest         => "MANIFEST.txt",
 	:gem_host         => :rubyforge,
 	:configurations   => "~/Library/Application Support/Bonesplitter",
