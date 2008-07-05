@@ -1,4 +1,9 @@
-puts "Required assess-code"
+#--
+# Copyright 2007 by Stefan Rusterholz.
+# All rights reserved.
+# See LICENSE.txt for permissions.
+#++
+
 
 
 class AssessCode

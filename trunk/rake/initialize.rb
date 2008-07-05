@@ -1,3 +1,11 @@
+#--
+# Copyright 2007 by Stefan Rusterholz.
+# All rights reserved.
+# See LICENSE.txt for permissions.
+#++
+
+
+
 require 'pp'
 $LOAD_PATH.unshift(File.expand_path("#{__FILE__}/../../lib")) # trunk/lib
 $LOAD_PATH.unshift(File.expand_path("#{__FILE__}/../lib"))    # trunk/rake/lib

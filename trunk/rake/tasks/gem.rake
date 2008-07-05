@@ -1,3 +1,11 @@
+#--
+# Copyright 2007 by Stefan Rusterholz.
+# All rights reserved.
+# See LICENSE.txt for permissions.
+#++
+
+
+
 namespace :gem do
 
 	# No data in Project
@@ -28,6 +36,7 @@ namespace :gem do
 
 	# Prerequisites met
 	else
+		Project.gem.__finalize__
 		Project.gem.spec = gem_spec(Project.gem)
 
 		# task gem:package

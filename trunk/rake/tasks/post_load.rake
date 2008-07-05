@@ -1,11 +1,19 @@
+#--
+# Copyright 2007 by Stefan Rusterholz.
+# All rights reserved.
+# See LICENSE.txt for permissions.
+#++
+
+
+
 # This rakefile doesn't define any tasks, it is run after Rakefile has run and before
 # any other rakefile is imported, so it can clean up the Project object and resolve some
 # dependencies.
 
 
 # defaultize meta data
-Project.meta.summary     ||= extract_summary()
-Project.meta.description ||= extract_description()
+Project.meta.summary     ||= proc { extract_summary() }
+Project.meta.description ||= proc { extract_description() }
 
 
 # defaultize rdoc task
@@ -40,9 +48,3 @@ if Project.gem then
 	
 	# gem_file needs the generated gemspec and package object and is hence defaultized in gem.rake
 end
-
-Project.__hash__.each_value { |sub|
-	sub.__hash__.each { |k,v|
-		sub[k] = v.call if v.respond_to?(:call)
-	}
-}

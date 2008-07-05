@@ -1,3 +1,11 @@
+#--
+# Copyright 2007 by Stefan Rusterholz.
+# All rights reserved.
+# See LICENSE.txt for permissions.
+#++
+
+
+
 require 'stringio'
 require 'ostruct'
 
@@ -110,7 +118,11 @@ module BoneSplitter
 	end
 	
 	def manifest(mani=Project.meta.manifest)
-		File.read(mani).split(/\n/)
+		if File.exist?(mani) then
+			File.read(mani).split(/\n/)
+		else
+			[]
+		end
 	end
 	
 	def bin
