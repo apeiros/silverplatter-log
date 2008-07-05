@@ -1,0 +1,18 @@
+# Look in the tasks/setup.rb file for the various options that can be
+# configured in this Rakefile. The .rake files in the tasks directory
+# are where the options are used.
+
+require 'rake/initialize'
+
+task :default => 'spec:run'
+
+Project.meta.name             = 'silverplatter-log'
+Project.meta.version          = version_proc("SilverPlatter::Log::VERSION")
+Project.meta.website          = 'http://silverplatter.rubyforge.org/log'
+Project.meta.bugtracker       = 'http://'
+Project.meta.feature_requests = 'http://'
+
+Project.manifest.ignore       = %w[web/**/*]
+
+Project.rubyforge.project     = 'silverplatter'
+Project.rubyforge.path        = 'silverplatter/log'
