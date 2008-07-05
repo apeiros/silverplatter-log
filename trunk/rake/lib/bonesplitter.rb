@@ -179,7 +179,7 @@ module BoneSplitter
 	
 			from.dependencies.each do |dep|
 				s.add_dependency(*dep)
-			end
+			end if from.dependencies
 	
 			s.files            = from.files
 			s.executables      = from.executables.map {|fn| File.basename(fn)}

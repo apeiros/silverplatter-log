@@ -30,7 +30,7 @@ Project = ProjectClass.new
 
 # Gem Packaging
 Project.gem = ProjectClass.new({
-	:dependencies => %w[silverplatter-log],
+	:dependencies => nil,
 	:executables  => nil,
 	:extensions   => FileList['ext/**/extconf.rb'],
 	:files        => nil,

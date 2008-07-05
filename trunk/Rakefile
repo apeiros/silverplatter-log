@@ -1,11 +1,23 @@
-# Look in the tasks/setup.rb file for the various options that can be
-# configured in this Rakefile. The .rake files in the tasks directory
-# are where the options are used.
+#--
+# Copyright 2007 by Stefan Rusterholz.
+# All rights reserved.
+# See LICENSE.txt for permissions.
+#++
 
+
+
+# Look in the rake/initialize.rb file for the various options that can be
+# configured in this Rakefile. The .rake files in the rake/tasks directory
+# are where the options are used.
 require 'rake/initialize'
 
+# The default task
 task :default => 'spec:run'
 
+
+
+# Project details (defaults are in rake/initialize, some cleanup is done per section in the
+# prerequisite task in each .task file, some other cleanup is done in post_load.rake)
 Project.meta.name             = 'silverplatter-log'
 Project.meta.version          = version_proc("SilverPlatter::Log::VERSION")
 Project.meta.website          = 'http://silverplatter.rubyforge.org/log'
