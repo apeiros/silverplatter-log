@@ -41,6 +41,7 @@ namespace :doc do
 		Project.rdoc.options ||= []
 		Project.rdoc.options.push('-t', Project.rdoc.title)
 		Project.rdoc.main    ||= Project.meta.readme
+		Project.rdoc.__finalize__
 
 		Rake::RDocTask.new do |rd|
 			rd.main       = Project.rdoc.main

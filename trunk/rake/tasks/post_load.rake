@@ -14,3 +14,4 @@
 # defaultize meta data, have to do this here because it's needed by gem.rake before any task is run.
 Project.meta.summary     ||= proc { extract_summary() }
 Project.meta.description ||= proc { extract_description() || extract_summary() }
+Project.meta.__finalize__
