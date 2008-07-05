@@ -19,22 +19,19 @@
 #   end
 #
 # == Use-cases
-# === Daemon
-# Since a daemon should not output anything at all, the advice is to create a
-# logger (Log::File e.g.) and assign a Log::Forward to each, $stdout and $stderr.
-# It's suggested to use :info as the default level for $stdout and :warn for
-# $stderr.
+# Daemon::      Since a daemon should not output anything at all, the advice is to create a
+#               logger (Log::File e.g.) and assign a Log::Forward to each, $stdout and $stderr.
+#               It's suggested to use :info as the default level for $stdout and :warn for
+#               $stderr.
 #
-# === Application
-# If you use Log with your application, you most likely want to log to a file.
-# The advice for that is to simply assign a Log::File to $stderr, anything that
-# prints to $stderr is now logged as :warn.
+# Application:: If you use Log with your application, you most likely want to log to a file.
+#               The advice for that is to simply assign a Log::File to $stderr, anything that
+#               prints to $stderr is now logged as :warn.
 #
-# === Library
-# With a library you most likely just want Log::Comfort. It adds logging methods
-# and convenience methods to your class. It uses @logger if set, else $stderr to
-# puts a Log::Entry. That way your library has decent logging even if the
-# employing app doesn't use a logger.
+# Library::     With a library you most likely just want Log::Comfort. It adds logging methods
+#               and convenience methods to your class. It uses @logger if set, else $stderr to
+#               puts a Log::Entry. That way your library has decent logging even if the
+#               employing app doesn't use a logger.
 #
 # == Notes
 # require 'log/kernel' to get convenience methods in Kernel
