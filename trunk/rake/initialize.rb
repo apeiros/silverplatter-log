@@ -91,7 +91,7 @@ Project.rdoc = ProjectClass.new({
                  ],
 	:include    => %w[{lib,bin,ext}/**/* *.{txt,markdown,rdoc}], # globs
 	:exclude    => %w[**/*/extconf.rb Manifest.txt],             # globs
-	:main       => 'README.markdown',                            # path
+	:main       => nil,                                          # path
 	:output_dir => 'docs',                                       # path
 	:remote_dir => 'irc/docs',
 	#:template   => lib?(:allison) && Gem.searcher.find("allison").full_gem_path+"/lib/allison",

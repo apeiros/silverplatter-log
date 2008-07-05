@@ -11,18 +11,6 @@
 # dependencies.
 
 
-# defaultize meta data
+# defaultize meta data, have to do this here because it's needed by gem.rake before any task is run.
 Project.meta.summary     ||= proc { extract_summary() }
 Project.meta.description ||= proc { extract_description() || extract_summary() }
-
-
-# defaultize rdoc task
-if Project.rdoc then
-	Project.rdoc.files   ||= []
-	Project.rdoc.files    += FileList.new(Project.rdoc.include || %w[lib/**/* *.{txt markdown rdoc}])
-	Project.rdoc.files    -= FileList.new(Project.rdoc.exclude) if Project.rdoc.exclude
-	Project.rdoc.files.reject! { |f| File.directory?(f) }
-	Project.rdoc.title   ||= "#{Project.meta.name}-#{Project.meta.version} Documentation"
-	Project.rdoc.options ||= []
-	Project.rdoc.options.push('-t', Project.rdoc.title)
-end
