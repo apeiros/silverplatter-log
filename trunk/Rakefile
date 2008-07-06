@@ -23,6 +23,7 @@ Project.meta.version          = version_proc("SilverPlatter::Log::VERSION")
 Project.meta.website          = 'http://silverplatter.rubyforge.org/log'
 Project.meta.bugtracker       = 'http://'
 Project.meta.feature_requests = 'http://'
+Project.meta.use_git          = true
 
 Project.manifest.ignore       = %w[web/**/*]
 
