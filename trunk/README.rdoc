@@ -1,10 +1,10 @@
-= SilverPlatter::IRC
+= SilverPlatter::Log
 
 
 == Indexing
 Author::  Stefan Rusterholz <apeiros@gmx.net>
 Version:: 0.1.0
-Website:: http://silverplatter.rubyforge.org/irc
+Website:: http://silverplatter.rubyforge.org/log
 
 
 == Summary
@@ -17,12 +17,42 @@ FIXME
 
 == Installing
 === Via RubyGems
+You need for the installation:
+* rubygems >= 1.2.0
+
+You need for some of the rake tasks:
+* bacon
+* flexmock
+* git
+* hpricot
+* rcov
+* rdiscount (or markdown)
+* rdoc
+* rspec
+
+To install, do:
 
 	gem install silverplatter-log
 
 Note: you might have to use 'sudo gem install silverplatter-log'
 
 === From Github
+You need for the installation:
+* rubygems >= 1.2.0 (if you want to use any gem tasks)
+* hpricot >= 0.6.0 (needed for most rake tasks)
+* rdoc >= 2.0.0 (needed for most rake tasks)
+
+You need for some of the rake tasks:
+* bacon
+* flexmock
+* git
+* hpricot
+* rcov
+* rdiscount (or markdown)
+* rdoc
+* rspec
+
+To install, do:
 
 	curl http://github.com/apeiros/silverplatter-log/tarball/master
 	cd trunk
