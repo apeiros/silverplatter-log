@@ -38,30 +38,32 @@
 # it isn't required via 'log' alone to avoid accidental method name clashes.
 # notice that log/kernel will override Kernel#warn
 #
-module Log
-	GroupSeparator   = "\x1d"
-	RecordSeparator  = "\x1e"
-	UnitSeparator    = "\x1f"
-	RecordTerminator = "\n"
-
-	# escape binary data, the data will contain no \n, \r or \t's after escaping, but
-	# still contain binary characters, but all of them preceeded by \e
-	def self.escape(data)
-		data.
-			gsub(/\e/, "\e\e").
-			gsub(/\n/, "\en").
-			gsub(/\r/, "\er").
-			gsub(/\t/, "\et").
-			gsub(/[\x00-\x1a\x1c-\x1f]/, "\e\\0")
-	end
+module SilverPlatter
+	module Log
+		GroupSeparator   = "\x1d"
+		RecordSeparator  = "\x1e"
+		UnitSeparator    = "\x1f"
+		RecordTerminator = "\n"
 	
-	# unescapes data escaped by Log.escape
-	def self.unescape(data)
-		data.
-			gsub(/\en/, "\n").
-			gsub(/\er/, "\r").
-			gsub(/\et/, "\t").
-			gsub(/\e(.)/, '\1')
+		# escape binary data, the data will contain no \n, \r or \t's after escaping, but
+		# still contain binary characters, but all of them preceeded by \e
+		def self.escape(data)
+			data.
+				gsub(/\e/, "\e\e").
+				gsub(/\n/, "\en").
+				gsub(/\r/, "\er").
+				gsub(/\t/, "\et").
+				gsub(/[\x00-\x1a\x1c-\x1f]/, "\e\\0")
+		end
+		
+		# unescapes data escaped by Log.escape
+		def self.unescape(data)
+			data.
+				gsub(/\en/, "\n").
+				gsub(/\er/, "\r").
+				gsub(/\et/, "\t").
+				gsub(/\e(.)/, '\1')
+		end
 	end
 end
 

@@ -6,6 +6,10 @@
 
 
 
+require 'silverplatter/log/entry'
+
+
+
 module SilverPlatter
 	module Log
 
