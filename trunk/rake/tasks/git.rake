@@ -21,7 +21,7 @@ namespace :git do
 			v = ENV['VERSION'] or abort 'Must supply VERSION=x.y.z'
 	
 			tag = "%s-%s" % [Project.meta.name, Project.meta.version]
-			msg = "Creating tag for #{PROJ.name} version #{PROJ.version}"
+			msg = "Creating tag for #{Project.meta.name} version #{Project.meta.version}"
 	
 			puts "Creating Git tag '#{tag}'"
 			unless system "git tag -a -m '#{msg}' #{tag}"
