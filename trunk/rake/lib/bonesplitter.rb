@@ -156,16 +156,14 @@ module BoneSplitter
 	# requires that 'readme' is a file in markdown format and that Markdown exists
 	def extract_summary(file=Project.meta.readme)
 		return nil unless File.readable?(file)
-		return nil unless lib?('hpricot', "Requires %s to extract the summary")
-		html = case File.extname(file)
+		case File.extname(file)
 			when '.rdoc'
-				return nil unless lib?('rdoc/markup/to_html', "Requires %s to extract the summary")
-				RDoc::Markup::ToHtml.new.convert(File.read('README.rdoc'))
+				File.read('README.rdoc')[/^(\s*=+)\s+Summary\b.*?\n(.*?)\n\1/m, 2]
 			when '.markdown'
-				return nil unless lib?('markdown', "Requires %s to extract the summary")
-				Markdown.new(File.read(file)).to_html
+				return nil unless lib?(%w'hpricot markdown', "Requires %s to extract the summary")
+				html = Markdown.new(File.read(file)).to_html
+				(Hpricot(html)/"h2[text()=Summary]").first.next_sibling.inner_text.strip
 		end
-		(Hpricot(html)/"h2[text()=Summary]").first.next_sibling.inner_text.strip
 	rescue => e
 		warn "Failed extracting the summary: #{e}"
 		nil
@@ -174,16 +172,14 @@ module BoneSplitter
 	# requires that 'readme' is a file in markdown format and that Markdown exists
 	def extract_description(file=Project.meta.readme)
 		return nil unless File.readable?(file)
-		return nil unless lib?('hpricot', "Requires %s to extract the summary")
-		html = case File.extname(file)
+		case File.extname(file)
 			when '.rdoc'
-				return nil unless lib?('rdoc/markup/to_html', "Requires %s to extract the summary")
-				RDoc::Markup::ToHtml.new.convert(File.read('README.rdoc'))
+				File.read('README.rdoc')[/^(\s*=+)\s+Description\b.*?\n(.*?)\n\1/m, 2]
 			when '.markdown'
-				return nil unless lib?('markdown', "Requires %s to extract the summary")
-				Markdown.new(File.read(file)).to_html
+				return nil unless lib?('hpricot markdown', "Requires %s to extract the summary")
+				html = Markdown.new(File.read(file)).to_html
+				(Hpricot(html)/"h2[text()=Description]").first.next_sibling.inner_text.strip
 		end
-		(Hpricot(html)/"h2[text()=Description]").first.next_sibling.inner_text.strip
 	rescue => e
 		warn "Failed extracting the description: #{e}"
 		nil

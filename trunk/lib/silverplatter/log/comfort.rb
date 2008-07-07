@@ -14,7 +14,7 @@ module SilverPlatter
 	module Log
 
 		# == Description
-		# silverplatter/log/comfort.rb provides some convenience methods for any class that includes
+		# Log::Comfort provides some convenience methods for any class that includes
 		# and any object that extends it.
 		#
 		# == Synopsis
@@ -23,86 +23,81 @@ module SilverPlatter
 		# log("Danger!", :warn)
 		# warn("Danger!")
 		# debug("mecode was here")
+		# rescue => e; exception(e); end
 		#
 		module Comfort
+			def self.extended(obj)
+				obj.logger = nil
+			end
 
 			# where data is logged to
 			attr_accessor :logger
-			
-			# Used for the origin-field in the log
-			alias log_origin class
 	
-			# See Log::Message.new
-			# Module::log(*args) is simply: $stderr.puts(Log::Message.new(*args))
-			def log(text, severity=:info, origin=nil, data=nil, *flags)
+			# See Log::log
+			# Comfort#log uses @logger || $stderr as logging device.
+			def log(text, severity=:info, data=nil, *flags)
 				(@logger || $stderr).puts(
-					Log::Entry.new(text.to_str, severity, origin||log_origin, data=nil, *flags)
+					::SilverPlatter::Log::Entry.new(text.to_str, severity, caller(1), data, *flags)
 				)
 			end
 		
-			# See Log::Entry.new to see what arguments are valid.
-			# Module::debug(text, *args) is the same as:
-			#   $stderr.puts(Log::Message.new(text, :debug, *args))
-			def debug(text, origin=nil, data=nil, *flags)
+			# See Log::debug
+			# Uses @logger || $stderr as logging device.
+			def debug(text, data=nil, *flags)
 				(@logger || $stderr).puts(
-					Log::Entry.new(text.to_str, :debug, origin||log_origin, data=nil, *flags)
+					::SilverPlatter::Log::Entry.new(text.to_str, :debug, caller(1), data, *flags)
 				)
 			end
 	
-			# See Log::Entry.new to see what arguments are valid.
-			# Module::info(text, *args) is the same as:
-			#   $stderr.puts(Log::Message.new(text, :info, *args))
-			def info(text, origin=nil, data=nil, *flags)
+			# See Log::info
+			# Uses @logger || $stderr as logging device.
+			def info(text, data=nil, *flags)
 				(@logger || $stderr).puts(
-					Log::Entry.new(text.to_str, :info, origin||log_origin, data=nil, *flags)
+					::SilverPlatter::Log::Entry.new(text.to_str, :info, caller(1), data, *flags)
 				)
 			end
 		
-			# See Log::Entry.new to see what arguments are valid.
-			# Module::warn(text, *args) is the same as:
-			#   $stderr.puts(Log::Message.new(text, :warn, *args))
-			def warn(text, origin=nil, data=nil, *flags)
+			# See Log::warn
+			# Uses @logger || $stderr as logging device.
+			def warn(text, data=nil, *flags)
 				(@logger || $stderr).puts(
-					Log::Entry.new(text.to_str, :warn, origin||log_origin, data=nil, *flags)
+					::SilverPlatter::Log::Entry.new(text.to_str, :warn, caller(1), data, *flags)
 				)
 			end
 		
-			# See Log::Entry.new to see what arguments are valid.
-			# Module::error(text, *args) is the same as:
-			#   $stderr.puts(Log::Message.new(text, :error, *args))
-			def error(text, origin=nil, data=nil, *flags)
+			# See Log::error
+			# Uses @logger || $stderr as logging device.
+			def error(text, data=nil, *flags)
 				(@logger || $stderr).puts(
-					Log::Entry.new(text.to_str, :error, origin||log_origin, data=nil, *flags)
+					::SilverPlatter::Log::Entry.new(text.to_str, :error, caller(1), data, *flags)
 				)
 			end
 		
-			# See Log::Entry.new to see what arguments are valid.
-			# Module::fail(text, *args) is the same as:
-			#   $stderr.puts(Log::Message.new(text, :fail, *args))
-			def fail(text, origin=nil, data=nil, *flags)
+			# See Log::fatal
+			# Uses @logger || $stderr as logging device.
+			def fatal(text, data=nil, *flags)
 				(@logger || $stderr).puts(
-					Log::Entry.new(text.to_str, :fail, origin||log_origin, data=nil, *flags)
+					::SilverPlatter::Log::Entry.new(text.to_str, :fatal, caller(1), data, *flags)
 				)
 			end
 	
-			# Exception is special cased, if @logger || $stderr responds to 'exception',
-			# the exception is just forwarded, else it uses puts and prints
-			# the exception and the backtrace
-			def exception(e)
-				log = @logger || $stderr
-				if log.respond_to?(:exception) then
-					log.exception(e)
-				else
-					log.puts("#{Time.now.strftime('%FT%T')} [exception]: #{e} (#{e.class})")
-					if $VERBOSE then
-						prefix = "--> "
-						log.puts(*e.backtrace.map { |l| prefix+l })
+			# See Log::log
+			# Comfort#exception uses @logger || $stderr as logging device.
+			# Comfort#exception will try to forward it to the logging device's
+			# #exception method, if that can't be done it 
+			def exception(e, data=nil, *flags)
+				(@logger || $stderr).puts(
+					if flags.first.is_a?(Time) then
+						::SilverPlatter::Log::Entry.new(e.message, caller(1), [e, data], flags.shift, :exception, *flags)
+					else
+						::SilverPlatter::Log::Entry.new(e.message, caller(1), [e, data], :exception, *flags)
 					end
-				end
+				)
 			end
 		end # Comfort
 	
 		# enable Log.log etc.
+		@logger = $stderr
 		extend Comfort
 	end # Log
 end # SilverPlatter

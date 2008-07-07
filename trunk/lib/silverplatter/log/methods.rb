@@ -10,32 +10,36 @@ module SilverPlatter
 	module Log
 
 		# Provides convenience mappings to #process
-		# Map debug, info, warn, error, fail to log, log itself uses process with
-		# Entry.new
-		# See Log::File for an example.
+		# Map debug, info, warn, error, fail to log_entry
 		module Methods
-			def log(*args)
-				process(Entry.new(*args))
+			# See Log::debug
+			def debug(text, *args)
+				log_entry(::SilverPlatter::Log::Entry.new(text, :debug, *args))
+			end
+
+			# See Log::info
+			def info(text, *args)
+				log_entry(::SilverPlatter::Log::Entry.new(text, :info, *args))
+			end
+
+			# See Log::warn
+			def warn(text, *args)
+				log_entry(::SilverPlatter::Log::Entry.new(text, :warn, *args))
+			end
+	
+			# See Log::error
+			def error(text, *args)
+				log_entry(::SilverPlatter::Log::Entry.new(text, :error, *args))
+			end
+	
+			# See Log::fail
+			def fail(text, *args)
+				log_entry(::SilverPlatter::Log::Entry.new(text, :fail, *args))
 			end
 			
-			def debug(text, *args)
-				log(text, :debug, *args)
-			end
-	
-			def info(text, *args)
-				log(text, :info, *args)
-			end
-	
-			def warn(text, *args)
-				log(text, :warn, *args)
-			end
-	
-			def error(text, *args)
-				log(text, :error, *args)
-			end
-	
-			def fail(text, *args)
-				log(text, :fail, *args)
+			# See Log::exception
+			def exception(e, *args)
+				log_entry(::SilverPlatter::Log::ExceptionEntry.new(e, *args))
 			end
 		end
 	end
