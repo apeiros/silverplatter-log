@@ -12,11 +12,11 @@ require 'silverplatter/log/formatter'
 
 module SilverPlatter
 	module Log
-		GroupSeparator   = "\x1d".freeze
-		RecordSeparator  = "\x1e".freeze
-		UnitSeparator    = "\x1f".freeze
-		RecordTerminator = "\n".freeze
-		EmptyString      = "".freeze
+		GroupSeparator   = "\x1d".freeze # :nodoc:
+		RecordSeparator  = "\x1e".freeze # :nodoc:
+		UnitSeparator    = "\x1f".freeze # :nodoc:
+		RecordTerminator = "\n".freeze   # :nodoc:
+		EmptyString      = "".freeze     # :nodoc:
 		
 		ColoredConsole   = Formatter.new({
 			:debug => proc { |e|
@@ -39,6 +39,7 @@ module SilverPlatter
 			"[#{e.severity.to_s.downcase}@#{e.time.strftime('%a %H:%M:%S')}] #{e.text} in #{e.origin.first}"
 		}
 
+		# Mapping from severity-symbol to integer
 		Severity = Hash.new{|h,k|k}.merge({
 			:debug => 1,
 			:info  => 2,
@@ -46,6 +47,8 @@ module SilverPlatter
 			:error => 8,
 			:fail  => 16,
 		})
+		
+		# Reverse mapping to Severity. Maps an integer to a Symbol.
 		InvSeverity = Severity.invert
 
 		# escape binary data, the data will contain no \n, \r or \t's after escaping, but

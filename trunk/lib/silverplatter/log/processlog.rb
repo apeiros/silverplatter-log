@@ -22,11 +22,13 @@ module SilverPlatter
 		#
 		# == Synopsis
 		#   require 'silverplatter/log/processlog'
-		#   obj.logger = Log.collect(Log.to_process('cronolog logs/%Y/%M/mylog-%d.log'))
-		class ProcessLog
+		#   obj.logger = Log.to_process('cronolog logs/%Y/%M/mylog-%d.log')
+		class ProcessLog < IOLog
 			Writeable = "wb".freeze
 			
-			# See Log::ProcessLog
+			# Create a new Logger logging to the stdin of the given
+			# process.
+			# See Log::ProcessLog.
 			def initialize(process)
 				super(IO.popen(process, Writeable))
 			end

@@ -13,7 +13,7 @@ module SilverPlatter
 		end
 
 		# == Summary
-		# Discards all logging
+		# Discards all logging. Can act as drop-in IO replacement.
 		#
 		# == Synopsis
 		#   require 'silverplatter/log/nolog'
@@ -22,6 +22,14 @@ module SilverPlatter
 			def log_entry(entry) # :nodoc:
 			end
 			def puts(*args) # :nodoc:
+			end
+			def write(*args) # :nodoc:
+			end
+			def <<(args) # :nodoc:
+			end
+			def print(*args) # :nodoc:
+			end
+			def printf(*args) # :nodoc:
 			end
 		end
 	end

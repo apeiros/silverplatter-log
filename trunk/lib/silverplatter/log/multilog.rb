@@ -6,6 +6,10 @@
 
 
 
+require 'silverplatter/log/puts'
+
+
+
 module SilverPlatter
 	module Log
 
@@ -18,12 +22,14 @@ module SilverPlatter
 		# Logs to multiple log services at once.
 		#
 		# === Synopsis
-		#   $stderr = SilverPlatter::Log::Collector.new(
-		#     Silverplatter::Log::MultiLog(
-		#       Silverplatter::Log::ConsoleLog(opts),
-		#       Silverplatter::Log::FileLog(path, opts)
-		#       Silverplatter::Log::ProcessLog(process, opts)
-		#     ), :warn
+		#   require 'silverplatter/log/multilog'
+		#   include SilverPlatter
+		#   $stderr = Log.collect( # needed for the write method.
+		#     Log.to_all(
+		#       Log.to_console,
+		#       Log.to_file(path),
+		#       Log.to_process("cronolog #{cronolog_path}")
+		#     )
 		#   )
 		#
 		# === Description
@@ -32,10 +38,14 @@ module SilverPlatter
 		# and then forwarded as a puts.
 		#
 		class MultiLog
-			# Create a MultiLog instance. 
+			include Puts
+
+			# Create a MultiLog instance.
+			# See Log::MultiLog for more information.
 			def initialize(*receivers)
 				@buffer    = ""
 				@receivers = receivers
+				@severity  = :info # for Puts module
 			end
 			
 			# Add a receiver to the log events
@@ -54,6 +64,7 @@ module SilverPlatter
 				@receivers.each(&block)
 			end
 			
+			# Log an entry to all the loggers registered to this multilog.
 			def log_entry(entry)
 				for receiver in @receivers
 					receiver.log_entry(entry)

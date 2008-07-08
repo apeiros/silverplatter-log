@@ -6,8 +6,9 @@
 
 
 
-require 'silverplatter/log/essentials'
 require 'silverplatter/log/entry'
+require 'silverplatter/log/essentials'
+require 'silverplatter/log/puts'
 
 
 
@@ -24,10 +25,10 @@ module SilverPlatter
 		# calls.
 		#
 		# == Synopsis
-		# require 'silverplatter/log/collector'
-		# include SilverPlatter
-		# $stderr = Log::Collector.new(Log::ConsoleLog.new(STDERR))
-		# $stderr = Log.collect(Log.to_console(STDERR) # the same, shorter
+		#   require 'silverplatter/log/collector'
+		#   include SilverPlatter
+		#   $stderr = Log::Collector.new(Log::ConsoleLog.new(STDERR))
+		#   $stderr = Log.collect(Log.to_console(STDERR) # the same, shorter
 		#
 		# == Description
 		# Converts calls to puts with String or Log::Entry as arguments to calls to
@@ -77,8 +78,13 @@ module SilverPlatter
 			# Read completed lines, remove them from the buffer and `puts` them.
 			def process_buffer #:nodoc:
 				while line = @buffer.slice!(/.*\n/)
-					@logger.log_entry(Entry.new(line, @severity, caller(2), nil, *@flags))
+					@logger.log_entry(Entry.new(line.chomp, @severity, caller(2), nil, *@flags))
 				end
+			end
+			
+			# Forward to logging device
+			def log_entry(entry)
+				@logger.log_entry(entry)
 			end
 			
 			def <<(obj) # :nodoc:

@@ -7,6 +7,7 @@
 
 
 require 'silverplatter/log/essentials'
+require 'silverplatter/log/puts'
 
 
 
@@ -18,14 +19,31 @@ module SilverPlatter
 			Log::ConsoleLog.new(*args)
 		end
 
-		# Logs data to STD(ERR/OUT)
+		# === Summary
+		# Logs data colored to STDOUT
+		#
+		# === Synopsis
+		#   require 'silverplatter/log/consolelog'
+		#   require 'silverplatter/log/collector'
+		#   include SilverPlatter
+		#   # Log.collect is required due to the #write method
+		#   $stdout = Log.collect(Log.to_console, :info)
+		#   $stderr = Log.collect($stdout, :warn)
+		#   warn "foo"
+		#   puts "bar"
+		#
 		class ConsoleLog
-			def initialize(out=nil)
-				@out          = out || STDERR
+			include Puts
+
+			# See Log::ConsoleLog for more information.
+			def initialize
+				@severity = :info
 			end
-			
+
+			# Log an entry to STDOUT.
 			def log_entry(entry)
-				@out.puts(ColoredConsole.format(entry))
+				# STDOUT instead of $stdout so $stdout can be wrapped with a logger.
+				STDOUT.puts(ColoredConsole.format(entry))
 			end
 		end
 	end

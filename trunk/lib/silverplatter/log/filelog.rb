@@ -24,6 +24,8 @@ module SilverPlatter
 		#   require 'silverplatter/log/filelog'
 		#   obj.logger = Log.to_file('path/to/file')
 		class FileLog < IOLog
+
+			# See Log::FileLog for more information.
 			def initialize(path, append=true)
 				super(File.open(path, append ? 'ab' : 'wb'))
 			end

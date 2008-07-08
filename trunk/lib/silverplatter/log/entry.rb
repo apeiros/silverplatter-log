@@ -17,9 +17,10 @@ module SilverPlatter
 		# Represents a single entry in a log
 		#
 		# == Synopsis
-		# require 'silverplatter/log/entry'
-		# SilverPlatter::Log::Entry.new("text", :warn, caller(0), additionaldata)
+		#   require 'silverplatter/log/entry'
+		#   SilverPlatter::Log::Entry.new("text", :warn, caller(0), additionaldata, %w[some flags])
 		class Entry
+
 			# Serialization format.
 			# Currently *only* used by Entry#serialize, but not by Entry::deserialize
 			Serialized =
@@ -34,26 +35,27 @@ module SilverPlatter
 			InspectTemplate = "#<%s %s %s %s %s flags=%s data=%s>".freeze
 
 			# Template for to_s without formatter
-			DefaultFormat	= "[%s@%s] %s in %s".freeze
+			DefaultFormat	  = "[%s@%s] %s in %s".freeze
+			
+			# Template for strftime used in to_s
+			DefaultStrftime = '%FT%T'.freeze
 
-			class <<self
-				# === Summary
-				# Create an Entry from the String of a serialized Entry.
-				#
-				# === Synopsis
-				#   Log::Entry.deserialize(Log::Entry.new("text".serialize)).text # => "text"
-				def deserialize(line)
-					time, severity, origin, text, flagstr, data = line.chomp(RecordTerminator).split(RecordSeparator)
-					severity = Integer(severity) rescue severity
-					new(
-						text,
-						InvSeverity[severity],
-						Marshal.load(Log.unescape(origin)),
-						Marshal.load(Log.unescape(data)),
-						Time.at(time.to_i),
-						*flagstr.split(UnitSeparator)
-					)
-				end
+			# === Summary
+			# Create an Entry from the String of a serialized Entry.
+			#
+			# === Synopsis
+			#   Log::Entry.deserialize(Log::Entry.new("text".serialize)).text # => "text"
+			def self.deserialize(line)
+				time, severity, origin, text, flagstr, data = line.chomp(RecordTerminator).split(RecordSeparator)
+				severity = Integer(severity) rescue severity
+				new(
+					text,
+					InvSeverity[severity],
+					Marshal.load(Log.unescape(origin)),
+					Marshal.load(Log.unescape(data)),
+					Time.at(time.to_i),
+					*flagstr.split(UnitSeparator)
+				)
 			end
 	
 			Severity = Hash.new{|h,k|k}.merge({
@@ -77,7 +79,7 @@ module SilverPlatter
 			# The message of the entry
 			attr_reader :text
 			
-			# Flags set for this entry (any arbitrary symbol)
+			# Flags set for this entry (any object responding to to_s)
 			attr_reader :flags
 			
 			# Data payload (anything Marshallable)
@@ -87,7 +89,7 @@ module SilverPlatter
 			attr_accessor :formatter
 
 			def initialize(text, severity=:info, origin=nil, data=nil, *flags)
-				@time      = flags.first.kind_of?(Time) ? flags.shift : Time.now
+				@time      = Time.now
 				@severity  = severity
 				@origin    = Array(origin)
 				@text      = text
@@ -109,10 +111,13 @@ module SilverPlatter
 				[@severity, @text, @origin].hash
 			end
 			
+			# Get whether the given flag is set.
 			def [](key)
-				@flags[key]
+				@flags[key.to_s]
 			end
+			alias flag? []
 			
+			# Log::Entry is always a log_entry?
 			def log_entry?
 				true
 			end
@@ -168,7 +173,7 @@ module SilverPlatter
 					format.format(self)
 				else
 					sprintf DefaultFormat,
-						@time.strftime('%FT%T'),
+						@time.strftime(DefaultStrftime),
 						@severity,
 						@text,
 						@origin.first
