@@ -37,8 +37,6 @@ module SilverPlatter
 			DefaultFormat	= "[%s@%s] %s in %s".freeze
 
 			class <<self
-				attr_accessor :time_format
-				
 				# === Summary
 				# Create an Entry from the String of a serialized Entry.
 				#
@@ -159,6 +157,12 @@ module SilverPlatter
 				# /sprintf
 			end
 		
+			# Return a string-representation of the entry. If no
+			# formatter is given as argument, it first falls back to the formatter
+			# in @format (see Entry#format=) and if that is not present, to
+			# Entry::DefaultFormat
+			# Entry#to_s calls #format on the formatter, passing it self as the first and
+			# only argument. See Log::Formatter for an example implementation.
 			def to_s(format=nil)
 				if format ||= @format then
 					format.format(self)

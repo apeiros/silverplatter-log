@@ -8,9 +8,20 @@
 
 module SilverPlatter
 	module Log
-		# discards all messages
+		def self.discard
+			Log::NoLog.new
+		end
+
+		# == Summary
+		# Discards all logging
+		#
+		# == Synopsis
+		#   require 'silverplatter/log/nolog'
+		#   obj.logger = Log.discard
 		class NoLog
-			def log_entry(entry)
+			def log_entry(entry) # :nodoc:
+			end
+			def puts(*args) # :nodoc:
 			end
 		end
 	end

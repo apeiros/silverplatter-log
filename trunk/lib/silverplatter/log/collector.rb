@@ -29,6 +29,12 @@ module SilverPlatter
 		# $stderr = Log::Collector.new(Log::ConsoleLog.new(STDERR))
 		# $stderr = Log.collect(Log.to_console(STDERR) # the same, shorter
 		#
+		# == Description
+		# Converts calls to puts with String or Log::Entry as arguments to calls to
+		# log_entry (always with Log::Entry as argument).
+		# Stores calls to write, print, printf and << in a buffer and calls log_entry
+		# upon completed lines.
+		#
 		# == Notes
 		# Accepts and won't modify Log::Entry objects passed to Collector#puts
 		#
@@ -50,6 +56,7 @@ module SilverPlatter
 		# All read methods must be implemented by the including class
 		#     
 		class Collector
+			include Puts
 		
 			# Severity that will be set for every string converted to a Log::Entry
 			attr_accessor :severity
@@ -74,19 +81,6 @@ module SilverPlatter
 				end
 			end
 			
-			# Convert strings to Log::Entry, keep Log::Entry objects as is.
-			# Pass them on to @logger.log_entry.
-			def puts(*objs) # :nodoc:
-				for obj in objs
-					if obj.log_entry? then
-						@logger.log_entry(obj)
-					else
-						@logger.log_entry(Entry.new(obj.to_s, @severity, caller(1), nil, *@flags))
-					end
-				end
-				nil
-			end
-
 			def <<(obj) # :nodoc:
 				@buffer << obj.to_s
 				process_buffer

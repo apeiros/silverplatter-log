@@ -25,9 +25,13 @@ module SilverPlatter
 		# debug("mecode was here")
 		# rescue => e; exception(e); end
 		#
+		# == Notes
+		# If you include Log::Comfort, you should initialize @logger within initialize.
+		# If you extend with Log::Comfort, Log::Comfort will initialize it with nil.
+		#
 		module Comfort
-			def self.extended(obj)
-				obj.logger = nil
+			def self.extended(obj) # :nodoc:
+				obj.logger ||= nil
 			end
 
 			# where data is logged to

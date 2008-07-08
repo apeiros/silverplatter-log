@@ -12,12 +12,17 @@ require 'silverplatter/log/iolog'
 
 module SilverPlatter
 	module Log
-		# Log.to_file is equivalent to Log::File.new
+		# Log.to_file is equivalent to Log::FileLog.new
 		def self.to_file(*args)
 			Log::FileLog.new(*args)
 		end
 	
+		# == Summary
 		# Logs data to file
+		#
+		# == Synopsis
+		#   require 'silverplatter/log/filelog'
+		#   obj.logger = Log.to_file('path/to/file')
 		class FileLog < IOLog
 			def initialize(path, append=true)
 				super(File.open(path, append ? 'ab' : 'wb'))

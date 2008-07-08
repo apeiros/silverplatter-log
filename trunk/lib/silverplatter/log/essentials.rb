@@ -23,10 +23,10 @@ module SilverPlatter
 				"\e[46m\e[30m\e[1m DEBUG \e[0m #{e.time.strftime('%a %H:%M:%S')}: #{e.text} in #{e.origin.first}"
 			},
 			:info  => proc { |e|
-				"\e[44m\e[30m\e[1m INFO \e[0m #{e.time.strftime('%a %H:%M:%S')}: #{e.text} in #{e.origin.first}"
+				"\e[44m\e[30m\e[1m INFO  \e[0m #{e.time.strftime('%a %H:%M:%S')}: #{e.text} in #{e.origin.first}"
 			},
 			:warn  => proc { |e|
-				"\e[43m\e[30m\e[1m WARN \e[0m #{e.time.strftime('%a %H:%M:%S')}: #{e.text} in #{e.origin.first}"
+				"\e[43m\e[30m\e[1m WARN  \e[0m #{e.time.strftime('%a %H:%M:%S')}: #{e.text} in #{e.origin.first}"
 			},
 			:error => proc { |e|
 				"\e[41m\e[30m\e[1m ERROR \e[0m #{e.time.strftime('%a %H:%M:%S')}: #{e.text} in #{e.origin.first}"
@@ -39,10 +39,6 @@ module SilverPlatter
 			"[#{e.severity.to_s.downcase}@#{e.time.strftime('%a %H:%M:%S')}] #{e.text} in #{e.origin.first}"
 		}
 
-		# currently unused
-		Printable  = "%d#{RecordSeparator}%s#{RecordSeparator}%s#{RecordSeparator}%s"
-
-		DefaultFormat = "%{time:%FT%T} [%{severity}]: %{text} in %{origin}"
 		Severity = Hash.new{|h,k|k}.merge({
 			:debug => 1,
 			:info  => 2,

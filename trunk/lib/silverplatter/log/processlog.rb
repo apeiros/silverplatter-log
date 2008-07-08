@@ -21,11 +21,12 @@ module SilverPlatter
 		# Sends logdata to a process
 		#
 		# == Synopsis
-		#   obj.logger = 
+		#   require 'silverplatter/log/processlog'
+		#   obj.logger = Log.collect(Log.to_process('cronolog logs/%Y/%M/mylog-%d.log'))
 		class ProcessLog
 			Writeable = "wb".freeze
 			
-			# 
+			# See Log::ProcessLog
 			def initialize(process)
 				super(IO.popen(process, Writeable))
 			end
