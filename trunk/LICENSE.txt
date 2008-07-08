@@ -2,7 +2,7 @@ The SilverPlatter libraries are copyrighted free software by Stefan Rusterholz.
 You can redistribute it and/or modify it under the terms of the conditions
 below (also known as the 'Ruby License'). If you wish to use it under another
 license, please contact Stefan Rusterholz
-<stefan.rusterholz+silverplatter-irc <at> gmail.com>.
+<stefan.rusterholz+silverplatter-log <at> gmail.com>.
 
   1. You may make and give away verbatim copies of the source form of the
      software without restriction, provided that you duplicate all of the
