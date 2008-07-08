@@ -6,7 +6,6 @@
 
 
 
-require 'enumerator'
 require 'silverplatter/log'
 
 
@@ -47,18 +46,14 @@ module SilverPlatter
 				#   Log::Entry.deserialize(Log::Entry.new("text".serialize)).text # => "text"
 				def deserialize(line)
 					time, severity, origin, text, flagstr, data = line.chomp(RecordTerminator).split(RecordSeparator)
-					flags = {}
-					flagstr.split(UnitSeparator).each_cons(2) { |key, value|
-						flagstr[key] = value
-					}
 					severity = Integer(severity) rescue severity
 					new(
 						text,
 						InvSeverity[severity],
-						Log.unescape(origin),
+						Marshal.load(Log.unescape(origin)),
 						Marshal.load(Log.unescape(data)),
 						Time.at(time.to_i),
-						flags
+						*flagstr.split(UnitSeparator)
 					)
 				end
 			end
@@ -99,8 +94,7 @@ module SilverPlatter
 				@origin    = Array(origin)
 				@text      = text
 				@data      = data
-				@flags     = flags.last.kind_of?(Hash) ? flags.pop : {}
-				@flags.each_key { |k,v| @flags[k.to_s] = @flags.delete(k) } # convert keys to strings
+				@flags     = {}
 				flags.each { |flag| @flags[flag.to_s] = true }
 				@formatter = nil
 			end
@@ -160,7 +154,7 @@ module SilverPlatter
 					Severity[@severity],
 					Log.escape(Marshal.dump(@origin)),
 					Log.escape(@text),
-					@flags.map.join(UnitSeparator),
+					@flags.keys.join(UnitSeparator),
 					Log.escape(Marshal.dump(@data))
 				# /sprintf
 			end
@@ -175,7 +169,7 @@ module SilverPlatter
 						@text,
 						@origin.first
 					# /sprintf
-				}
+				end
 			end
 			
 			def inspect # :nodoc:

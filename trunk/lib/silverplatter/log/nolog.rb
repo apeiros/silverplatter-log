@@ -10,10 +10,7 @@ module SilverPlatter
 	module Log
 		# discards all messages
 		class NoLog
-			def respond_to?(m,*a)
-				true
-			end
-			def method_missing(*a)
+			def log_entry(entry)
 			end
 		end
 	end
