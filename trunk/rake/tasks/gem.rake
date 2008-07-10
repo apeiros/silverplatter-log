@@ -87,7 +87,7 @@ namespace :gem do
 	
 		desc 'Install the gem'
 		task :install => [:clobber, 'gem:package'] do
-			sh "#{bin.sudo} #{bin.gem} install --no-update-sources pkg/#{Project.gem.spec.full_name}"
+			sh "#{bin.sudo unless File.writable?(Gem.dir)} #{bin.gem} install --no-update-sources pkg/#{Project.gem.spec.full_name}"
 		end
 	
 		desc 'Reinstall the gem'
@@ -98,7 +98,7 @@ namespace :gem do
 			if installed_list = Gem.source_index.find_name(Project.gem.name) then
 				installed_versions = installed_list.map { |s| s.version.to_s }
 				if installed_versions.include?(Project.gem.version) then
-					sh "#{bin.sudo} #{bin.gem} uninstall --version '#{Project.gem.version}' --ignore-dependencies --executables #{Project.gem.name}"
+					sh "#{bin.sudo unless File.writable?(Gem.dir)} #{bin.gem} uninstall --version '#{Project.gem.version}' --ignore-dependencies --executables #{Project.gem.name}"
 				end
 			end
 		end
@@ -106,7 +106,7 @@ namespace :gem do
 		desc 'Cleanup the gem'
 		task :cleanup do
 			abort("Gem name not set in Project.gem") unless Project.gem.name
-			sh "#{bin.sudo} #{bin.gem} cleanup #{Project.gem.name}"
+			sh "#{bin.sudo unless File.writable?(Gem.dir)} #{bin.gem} cleanup #{Project.gem.name}"
 		end
 
 		task :clobber => :clobber_package
