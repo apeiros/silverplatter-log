@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: SilverPlatter::Log</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">SilverPlatter::Log</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/silverplatter/log/collector_rb.html">
+                lib/silverplatter/log/collector.rb
+                </a>
+        <br />
+                <a href="../../files/lib/silverplatter/log/comfort_rb.html">
+                lib/silverplatter/log/comfort.rb
+                </a>
+        <br />
+                <a href="../../files/lib/silverplatter/log/consolelog_rb.html">
+                lib/silverplatter/log/consolelog.rb
+                </a>
+        <br />
+                <a href="../../files/lib/silverplatter/log/entry_rb.html">
+                lib/silverplatter/log/entry.rb
+                </a>
+        <br />
+                <a href="../../files/lib/silverplatter/log/essentials_rb.html">
+                lib/silverplatter/log/essentials.rb
+                </a>
+        <br />
+                <a href="../../files/lib/silverplatter/log/filelog_rb.html">
+                lib/silverplatter/log/filelog.rb
+                </a>
+        <br />
+                <a href="../../files/lib/silverplatter/log/filereader_rb.html">
+                lib/silverplatter/log/filereader.rb
+                </a>
+        <br />
+                <a href="../../files/lib/silverplatter/log/filter_rb.html">
+                lib/silverplatter/log/filter.rb
+                </a>
+        <br />
+                <a href="../../files/lib/silverplatter/log/formatter_rb.html">
+                lib/silverplatter/log/formatter.rb
+                </a>
+        <br />
+                <a href="../../files/lib/silverplatter/log/iolog_rb.html">
+                lib/silverplatter/log/iolog.rb
+                </a>
+        <br />
+                <a href="../../files/lib/silverplatter/log/methods_rb.html">
+                lib/silverplatter/log/methods.rb
+                </a>
+        <br />
+                <a href="../../files/lib/silverplatter/log/multilog_rb.html">
+                lib/silverplatter/log/multilog.rb
+                </a>
+        <br />
+                <a href="../../files/lib/silverplatter/log/nolog_rb.html">
+                lib/silverplatter/log/nolog.rb
+                </a>
+        <br />
+                <a href="../../files/lib/silverplatter/log/processlog_rb.html">
+                lib/silverplatter/log/processlog.rb
+                </a>
+        <br />
+                <a href="../../files/lib/silverplatter/log/puts_rb.html">
+                lib/silverplatter/log/puts.rb
+                </a>
+        <br />
+                <a href="../../files/lib/silverplatter/log/version_rb.html">
+                lib/silverplatter/log/version.rb
+                </a>
+        <br />
+                <a href="../../files/lib/silverplatter/log_rb.html">
+                lib/silverplatter/log.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h2>Synopsis</h2>
+<pre>
+  require 'silverplatter/log'
+  Logfile = Log.to_file(&quot;foo.log&quot;)
+  $stderr = Log.collect(Logfile, :warn) # capture everything that prints to $stderr and treat it as :warn level message
+  $stdout = Log.collect(Logfile, :info)
+  $stderr.puts &quot;foo&quot;
+  $stdout.puts &quot;bar&quot;
+  include Log::Comfort
+  info &quot;Log::Comfort provides some convenience methods&quot;
+  begin
+    raise &quot;baz&quot;
+  rescue =&gt; exception
+    $stdout.puts(exception)
+  end
+</pre>
+<h2><a href="Log.html">Log</a> Levels</h2>
+<table>
+<tr><td valign="top">debug:</td><td>Lowest level, used for messages that are irrelevant for daily use
+
+</td></tr>
+<tr><td valign="top">info:</td><td>Informal log entries, like &#8216;daemon started up&#8217;. Confirming that
+everything works as it should.
+
+</td></tr>
+<tr><td valign="top">warn:</td><td>An possible problem occurred that might need fixing.
+
+</td></tr>
+<tr><td valign="top">error:</td><td>An error occurred that requires fixing.
+
+</td></tr>
+<tr><td valign="top">fatal:</td><td>Irrecoverable error. The application will terminate after logging this
+event.
+
+</td></tr>
+</table>
+<h2>Use-cases</h2>
+<table>
+<tr><td valign="top">Daemon:</td><td>Since a daemon should not output anything at all, the advice is to create a
+logger (Log::File e.g.) and assign a Log::Forward to each, $stdout and
+$stderr. It&#8216;s suggested to use :info as the default level for $stdout
+and :warn for $stderr.
+
+</td></tr>
+<tr><td valign="top">Application:</td><td>If you use <a href="Log.html">Log</a> with your application, you most
+likely want to log to a file. The advice for that is to simply assign a
+Log::File to $stderr, anything that prints to $stderr is now logged as
+:warn.
+
+</td></tr>
+<tr><td valign="top">Library:</td><td>With a library you most likely just want <a
+href="Log/Comfort.html">Log::Comfort</a>. It adds logging methods and
+convenience methods to your class. It uses @logger if set, else $stderr to
+puts a <a href="Log/Entry.html">Log::Entry</a>. That way your library has
+decent logging even if the employing app doesn&#8216;t use a logger.
+
+</td></tr>
+</table>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000002">collect</a>&nbsp;&nbsp;
+      <a href="#M000009">discard</a>&nbsp;&nbsp;
+      <a href="#M000004">escape</a>&nbsp;&nbsp;
+      <a href="#M000008">to_all</a>&nbsp;&nbsp;
+      <a href="#M000003">to_console</a>&nbsp;&nbsp;
+      <a href="#M000006">to_file</a>&nbsp;&nbsp;
+      <a href="#M000007">to_io</a>&nbsp;&nbsp;
+      <a href="#M000010">to_process</a>&nbsp;&nbsp;
+      <a href="#M000005">unescape</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Module <a href="Log/Comfort.html" class="link">SilverPlatter::Log::Comfort</a><br />
+Module <a href="Log/Methods.html" class="link">SilverPlatter::Log::Methods</a><br />
+Module <a href="Log/Puts.html" class="link">SilverPlatter::Log::Puts</a><br />
+Class <a href="Log/Collector.html" class="link">SilverPlatter::Log::Collector</a><br />
+Class <a href="Log/ConsoleLog.html" class="link">SilverPlatter::Log::ConsoleLog</a><br />
+Class <a href="Log/Entry.html" class="link">SilverPlatter::Log::Entry</a><br />
+Class <a href="Log/FileLog.html" class="link">SilverPlatter::Log::FileLog</a><br />
+Class <a href="Log/FileReader.html" class="link">SilverPlatter::Log::FileReader</a><br />
+Class <a href="Log/Filter.html" class="link">SilverPlatter::Log::Filter</a><br />
+Class <a href="Log/Formatter.html" class="link">SilverPlatter::Log::Formatter</a><br />
+Class <a href="Log/IOLog.html" class="link">SilverPlatter::Log::IOLog</a><br />
+Class <a href="Log/MultiLog.html" class="link">SilverPlatter::Log::MultiLog</a><br />
+Class <a href="Log/NoLog.html" class="link">SilverPlatter::Log::NoLog</a><br />
+Class <a href="Log/ProcessLog.html" class="link">SilverPlatter::Log::ProcessLog</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">GroupSeparator</td>
+          <td>=</td>
+          <td class="context-item-value">&quot;\x1d&quot;.freeze # :nodoc:</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">RecordSeparator</td>
+          <td>=</td>
+          <td class="context-item-value">&quot;\x1e&quot;.freeze # :nodoc:</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">UnitSeparator</td>
+          <td>=</td>
+          <td class="context-item-value">&quot;\x1f&quot;.freeze # :nodoc:</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">RecordTerminator</td>
+          <td>=</td>
+          <td class="context-item-value">&quot;\n&quot;.freeze   # :nodoc:</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">EmptyString</td>
+          <td>=</td>
+          <td class="context-item-value">&quot;&quot;.freeze     # :nodoc:</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ColoredConsole</td>
+          <td>=</td>
+          <td class="context-item-value">Formatter.new({       :debug =&gt; proc { |e|         &quot;\e[46m\e[30m\e[1m DEBUG \e[0m #{e.time.strftime('%a %H:%M:%S')}: #{e.text} in #{e.origin.first}&quot;</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">HumanReadableFile</td>
+          <td>=</td>
+          <td class="context-item-value">Formatter.new { |e|       &quot;[#{e.severity.to_s.downcase}@#{e.time.strftime('%a %H:%M:%S')}] #{e.text} in #{e.origin.first}&quot;</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Severity</td>
+          <td>=</td>
+          <td class="context-item-value">Hash.new{|h,k|k}.merge({       :debug =&gt; 1,       :info  =&gt; 2,       :warn  =&gt; 4,       :error =&gt; 8,       :fail  =&gt; 16,     })</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Mapping from severity-symbol to integer
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">InvSeverity</td>
+          <td>=</td>
+          <td class="context-item-value">Severity.invert</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Reverse mapping to Severity. Maps an integer to a Symbol.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">VERSION</td>
+          <td>=</td>
+          <td class="context-item-value">&quot;0.2.0&quot;</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+The version of silverplatter-log
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
+
+        <div class="method-heading">
+          <a href="#M000002" class="method-signature">
+          <span class="method-name">collect</span><span class="method-args">(*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="Log.html#M000002">Log.collect</a> is equivalent to <a
+href="Log/Collector.html#M000036">Log::Collector.new</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000002-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000002-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/collector.rb, line 19</span>
+19:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">collect</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+20:       <span class="ruby-constant">Log</span><span class="ruby-operator">::</span><span class="ruby-constant">Collector</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+21:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <a href="#M000009" class="method-signature">
+          <span class="method-name">discard</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000009-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/nolog.rb, line 11</span>
+11:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">discard</span>
+12:       <span class="ruby-constant">Log</span><span class="ruby-operator">::</span><span class="ruby-constant">NoLog</span>.<span class="ruby-identifier">new</span>
+13:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="#M000004" class="method-signature">
+          <span class="method-name">escape</span><span class="method-args">(data)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="Log.html#M000004">escape</a> binary data, the data will contain no
+\n, \r or \t&#8216;s after escaping, but still contain binary characters,
+but all of them preceeded by \e
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000004-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/essentials.rb, line 56</span>
+56:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-identifier">data</span>)
+57:       <span class="ruby-identifier">data</span>.
+58:         <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\e/</span>, <span class="ruby-value str">&quot;\e\e&quot;</span>).
+59:         <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\n/</span>, <span class="ruby-value str">&quot;\en&quot;</span>).
+60:         <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\r/</span>, <span class="ruby-value str">&quot;\er&quot;</span>).
+61:         <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\t/</span>, <span class="ruby-value str">&quot;\et&quot;</span>).
+62:         <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/[\x00-\x1a\x1c-\x1f]/</span>, <span class="ruby-value str">&quot;\e\\0&quot;</span>)
+63:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="#M000008" class="method-signature">
+          <span class="method-name">to_all</span><span class="method-args">(*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="Log.html#M000008">Log.to_all</a> is equivalent to <a
+href="Log/MultiLog.html#M000030">Log::MultiLog.new</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000008-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/multilog.rb, line 17</span>
+17:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">to_all</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+18:       <span class="ruby-constant">Log</span><span class="ruby-operator">::</span><span class="ruby-constant">FileLog</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+19:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="#M000003" class="method-signature">
+          <span class="method-name">to_console</span><span class="method-args">(*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="Log.html#M000003">Log.to_console</a> is equivalent to <a
+href="Log/ConsoleLog.html#M000043">Log::ConsoleLog.new</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000003-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/consolelog.rb, line 18</span>
+18:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">to_console</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+19:       <span class="ruby-constant">Log</span><span class="ruby-operator">::</span><span class="ruby-constant">ConsoleLog</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+20:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <a href="#M000006" class="method-signature">
+          <span class="method-name">to_file</span><span class="method-args">(*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="Log.html#M000006">Log.to_file</a> is equivalent to <a
+href="Log/FileLog.html#M000029">Log::FileLog.new</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000006-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/filelog.rb, line 16</span>
+16:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">to_file</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+17:       <span class="ruby-constant">Log</span><span class="ruby-operator">::</span><span class="ruby-constant">FileLog</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+18:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="#M000007" class="method-signature">
+          <span class="method-name">to_io</span><span class="method-args">(*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="Log.html#M000007">Log.to_io</a> is equivalent to <a
+href="Log/IOLog.html#M000025">Log::IOLog.new</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000007-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/iolog.rb, line 16</span>
+16:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">to_io</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+17:       <span class="ruby-constant">Log</span><span class="ruby-operator">::</span><span class="ruby-constant">IOLog</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+18:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+          <a href="#M000010" class="method-signature">
+          <span class="method-name">to_process</span><span class="method-args">(*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="Log.html#M000010">Log.to_process</a> is equivalent to <a
+href="Log/ProcessLog.html#M000024">Log::ProcessLog.new</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000010-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/processlog.rb, line 16</span>
+16:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">to_process</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+17:       <span class="ruby-constant">Log</span><span class="ruby-operator">::</span><span class="ruby-constant">IOLog</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+18:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="#M000005" class="method-signature">
+          <span class="method-name">unescape</span><span class="method-args">(data)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+unescapes data escaped by <a href="Log.html#M000004">Log.escape</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000005-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/essentials.rb, line 66</span>
+66:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">unescape</span>(<span class="ruby-identifier">data</span>)
+67:       <span class="ruby-identifier">data</span>.
+68:         <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\en/</span>, <span class="ruby-value str">&quot;\n&quot;</span>).
+69:         <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\er/</span>, <span class="ruby-value str">&quot;\r&quot;</span>).
+70:         <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\et/</span>, <span class="ruby-value str">&quot;\t&quot;</span>).
+71:         <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\e(.)/</span>, <span class="ruby-value str">'\1'</span>)
+72:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

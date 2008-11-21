@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: SilverPlatter</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">SilverPlatter</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/silverplatter/log/collector_rb.html">
+                lib/silverplatter/log/collector.rb
+                </a>
+        <br />
+                <a href="../files/lib/silverplatter/log/comfort_rb.html">
+                lib/silverplatter/log/comfort.rb
+                </a>
+        <br />
+                <a href="../files/lib/silverplatter/log/consolelog_rb.html">
+                lib/silverplatter/log/consolelog.rb
+                </a>
+        <br />
+                <a href="../files/lib/silverplatter/log/entry_rb.html">
+                lib/silverplatter/log/entry.rb
+                </a>
+        <br />
+                <a href="../files/lib/silverplatter/log/essentials_rb.html">
+                lib/silverplatter/log/essentials.rb
+                </a>
+        <br />
+                <a href="../files/lib/silverplatter/log/filelog_rb.html">
+                lib/silverplatter/log/filelog.rb
+                </a>
+        <br />
+                <a href="../files/lib/silverplatter/log/filereader_rb.html">
+                lib/silverplatter/log/filereader.rb
+                </a>
+        <br />
+                <a href="../files/lib/silverplatter/log/filter_rb.html">
+                lib/silverplatter/log/filter.rb
+                </a>
+        <br />
+                <a href="../files/lib/silverplatter/log/formatter_rb.html">
+                lib/silverplatter/log/formatter.rb
+                </a>
+        <br />
+                <a href="../files/lib/silverplatter/log/iolog_rb.html">
+                lib/silverplatter/log/iolog.rb
+                </a>
+        <br />
+                <a href="../files/lib/silverplatter/log/methods_rb.html">
+                lib/silverplatter/log/methods.rb
+                </a>
+        <br />
+                <a href="../files/lib/silverplatter/log/multilog_rb.html">
+                lib/silverplatter/log/multilog.rb
+                </a>
+        <br />
+                <a href="../files/lib/silverplatter/log/nolog_rb.html">
+                lib/silverplatter/log/nolog.rb
+                </a>
+        <br />
+                <a href="../files/lib/silverplatter/log/processlog_rb.html">
+                lib/silverplatter/log/processlog.rb
+                </a>
+        <br />
+                <a href="../files/lib/silverplatter/log/puts_rb.html">
+                lib/silverplatter/log/puts.rb
+                </a>
+        <br />
+                <a href="../files/lib/silverplatter/log/version_rb.html">
+                lib/silverplatter/log/version.rb
+                </a>
+        <br />
+                <a href="../files/lib/silverplatter/log_rb.html">
+                lib/silverplatter/log.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Module <a href="SilverPlatter/Log.html" class="link">SilverPlatter::Log</a><br />
+
+    </div>
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README.rdoc</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README.rdoc</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README.rdoc
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Tue Jul 08 15:23:06 +0200 2008</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1><a href="../classes/SilverPlatter/Log.html">SilverPlatter::Log</a></h1>
+<h2>Indexing</h2>
+<table>
+<tr><td valign="top">Author:</td><td>Stefan Rusterholz &lt;stefan.rusterholz+silverplatter-log at gmail.com&gt;
+
+</td></tr>
+<tr><td valign="top">Version:</td><td>0.2.0
+
+</td></tr>
+<tr><td valign="top">Website:</td><td><a
+href="http://silverplatter.rubyforge.org/log">silverplatter.rubyforge.org/log</a>
+
+</td></tr>
+<tr><td valign="top">Project:</td><td><a
+href="http://rubyforge.org/projects/silverplatter">rubyforge.org/projects/silverplatter</a>
+
+</td></tr>
+<tr><td valign="top">Git Repository:</td><td><a
+href="http://github.com/apeiros/silverplatter-log">github.com/apeiros/silverplatter-log</a>
+
+</td></tr>
+<tr><td valign="top">Bugtracker:</td><td><a
+href="http://rubyforge.org/tracker/?atid=17330&group_id=4522&func=browse">rubyforge.org/tracker/?atid=17330&group_id=4522&func=browse</a>
+
+</td></tr>
+<tr><td valign="top">Feature Requests:</td><td><a
+href="http://rubyforge.org/tracker/?atid=17333&group_id=4522&func=browse">rubyforge.org/tracker/?atid=17333&group_id=4522&func=browse</a>
+
+</td></tr>
+<tr><td valign="top">License:</td><td>Ruby License (see LICENSE.txt)
+
+</td></tr>
+</table>
+<h2>Summary</h2>
+<p>
+<a href="../classes/SilverPlatter/Log.html">SilverPlatter::Log</a> is an
+easy to use library for Logging.
+</p>
+<h2>Description</h2>
+<p>
+FIXME
+</p>
+<h2>Installing</h2>
+<h3>Via RubyGems</h3>
+<p>
+You need for the installation:
+</p>
+<ul>
+<li>rubygems &gt;= 1.2.0
+
+</li>
+</ul>
+<p>
+You need for some of the rake tasks:
+</p>
+<ul>
+<li>bacon
+
+</li>
+<li>flexmock
+
+</li>
+<li>git (executable)
+
+</li>
+<li>rcov
+
+</li>
+<li>rdiscount (or markdown)
+
+</li>
+<li>rdoc
+
+</li>
+</ul>
+<p>
+To install, do:
+</p>
+<pre>
+        gem install silverplatter-log
+</pre>
+<p>
+Note: you might have to use &#8216;sudo gem install
+silverplatter-log&#8216;
+</p>
+<h3>From Github</h3>
+<p>
+You need for the installation:
+</p>
+<ul>
+<li>rubygems &gt;= 1.2.0 (if you want to use any gem tasks)
+
+</li>
+</ul>
+<p>
+You need for some of the rake tasks:
+</p>
+<ul>
+<li>bacon
+
+</li>
+<li>flexmock
+
+</li>
+<li>git (executable)
+
+</li>
+<li>rcov
+
+</li>
+<li>rdiscount (or markdown)
+
+</li>
+<li>rdoc
+
+</li>
+</ul>
+<p>
+To install, do:
+</p>
+<pre>
+        curl -L -o silverplatter-log.tgz http://github.com/apeiros/silverplatter-log/tarball/master
+        tar -xfz silverplatter-log.tgz
+        cd apeiros-silverplatter-log-&lt;hexid&gt;/trunk
+        rake gem:install
+</pre>
+<p>
+Note: you might have to use &#8216;sudo rake gem:install&#8216;
+</p>
+<h2>Examples</h2>
+<pre>
+  require 'silverplatter/log'
+  include SilverPlatter
+  Log.info 'this is an info'
+  $stdout = Log.collect(Log.to_console, :info)
+  $stderr = Log.collect($stdout, :warn)
+  warn &quot;Kernel#warn&quot;
+  puts &quot;Kernel#puts&quot;
+  include Log::Comfort
+  info &quot;this is an info via Log::Comfort#info&quot;
+</pre>
+<p>
+See in the examples dir for more code examples.
+</p>
+<h2>Design</h2>
+<p>
+FIXME
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

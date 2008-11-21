@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: SilverPlatter::Log::MultiLog</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">SilverPlatter::Log::MultiLog</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/lib/silverplatter/log/multilog_rb.html">
+                lib/silverplatter/log/multilog.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                <a href="../../Object.html">
+                Object
+               </a>
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h3>Summary</h3>
+<p>
+Logs to multiple log services at once.
+</p>
+<h3>Synopsis</h3>
+<pre>
+  require 'silverplatter/log/multilog'
+  include SilverPlatter
+  $stderr = Log.collect( # needed for the write method.
+    Log.to_all(
+      Log.to_console,
+      Log.to_file(path),
+      Log.to_process(&quot;cronolog #{cronolog_path}&quot;)
+    )
+  )
+</pre>
+<h3>Description</h3>
+<p>
+Forwards all calls on puts to it to all its receivers. Calls on write are
+buffered to newlines and then forwarded as a puts.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000031">__add__</a>&nbsp;&nbsp;
+      <a href="#M000032">__delete__</a>&nbsp;&nbsp;
+      <a href="#M000033">each</a>&nbsp;&nbsp;
+      <a href="#M000035">inspect</a>&nbsp;&nbsp;
+      <a href="#M000034">log_entry</a>&nbsp;&nbsp;
+      <a href="#M000030">new</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="Puts.html">Puts</a></span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000030" class="method-detail">
+        <a name="M000030"></a>
+
+        <div class="method-heading">
+          <a href="#M000030" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(*receivers)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Create a <a href="MultiLog.html">MultiLog</a> instance. See <a
+href="MultiLog.html">Log::MultiLog</a> for more information.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000030-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000030-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/multilog.rb, line 45</span>
+45:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">receivers</span>)
+46:         <span class="ruby-ivar">@buffer</span>    = <span class="ruby-value str">&quot;&quot;</span>
+47:         <span class="ruby-ivar">@receivers</span> = <span class="ruby-identifier">receivers</span>
+48:         <span class="ruby-ivar">@severity</span>  = <span class="ruby-identifier">:info</span> <span class="ruby-comment cmt"># for Puts module</span>
+49:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000031" class="method-detail">
+        <a name="M000031"></a>
+
+        <div class="method-heading">
+          <a href="#M000031" class="method-signature">
+          <span class="method-name">__add__</span><span class="method-args">(receiver)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Add a receiver to the log events
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000031-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000031-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/multilog.rb, line 52</span>
+52:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">__add__</span>(<span class="ruby-identifier">receiver</span>)
+53:         <span class="ruby-ivar">@receivers</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">receiver</span>
+54:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000032" class="method-detail">
+        <a name="M000032"></a>
+
+        <div class="method-heading">
+          <a href="#M000032" class="method-signature">
+          <span class="method-name">__delete__</span><span class="method-args">(receiver)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Delete a receiver
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000032-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000032-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/multilog.rb, line 57</span>
+57:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">__delete__</span>(<span class="ruby-identifier">receiver</span>)
+58:         <span class="ruby-ivar">@receivers</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">receiver</span>)
+59:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000033" class="method-detail">
+        <a name="M000033"></a>
+
+        <div class="method-heading">
+          <a href="#M000033" class="method-signature">
+          <span class="method-name">each</span><span class="method-args">(&amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Iterate over all receivers Note: Does not include Enumerable to avoid
+clashes.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000033-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000033-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/multilog.rb, line 63</span>
+63:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+64:         <span class="ruby-ivar">@receivers</span>.<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+65:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000035" class="method-detail">
+        <a name="M000035"></a>
+
+        <div class="method-heading">
+          <a href="#M000035" class="method-signature">
+          <span class="method-name">inspect</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000035-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000035-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/multilog.rb, line 74</span>
+74:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inspect</span>
+75:         <span class="ruby-identifier">sprintf</span> <span class="ruby-value str">&quot;#&lt;%s:%08x %p&gt;&quot;</span>,
+76:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>,
+77:           <span class="ruby-identifier">object_id</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-value">1</span>,
+78:           <span class="ruby-ivar">@receivers</span>
+79:         <span class="ruby-comment cmt"># /sprintf</span>
+80:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000034" class="method-detail">
+        <a name="M000034"></a>
+
+        <div class="method-heading">
+          <a href="#M000034" class="method-signature">
+          <span class="method-name">log_entry</span><span class="method-args">(entry)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="../Log.html">Log</a> an entry to all the loggers registered to
+this multilog.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000034-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000034-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/multilog.rb, line 68</span>
+68:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">log_entry</span>(<span class="ruby-identifier">entry</span>)
+69:         <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">receiver</span> <span class="ruby-keyword kw">in</span> <span class="ruby-ivar">@receivers</span>
+70:           <span class="ruby-identifier">receiver</span>.<span class="ruby-identifier">log_entry</span>(<span class="ruby-identifier">entry</span>)
+71:         <span class="ruby-keyword kw">end</span>
+72:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

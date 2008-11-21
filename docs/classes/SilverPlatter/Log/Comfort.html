@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: SilverPlatter::Log::Comfort</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">SilverPlatter::Log::Comfort</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/lib/silverplatter/log/comfort_rb.html">
+                lib/silverplatter/log/comfort.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h2>Description</h2>
+<p>
+<a href="Comfort.html">Log::Comfort</a> provides some convenience methods
+for any class that includes and any object that extends it.
+</p>
+<h2>Synopsis</h2>
+<pre>
+  include SilverPlatter::Log::Comfort
+  log(&quot;Some info&quot;)
+  log(&quot;Danger!&quot;, :warn)
+  warn(&quot;Danger!&quot;)
+  debug(&quot;mecode was here&quot;)
+  rescue =&gt; e; exception(e); end
+</pre>
+<h2>Notes</h2>
+<p>
+If you include <a href="Comfort.html">Log::Comfort</a>, you should
+initialize @logger within initialize. If you extend with <a
+href="Comfort.html">Log::Comfort</a>, <a
+href="Comfort.html">Log::Comfort</a> will initialize it with nil.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000012">debug</a>&nbsp;&nbsp;
+      <a href="#M000015">error</a>&nbsp;&nbsp;
+      <a href="#M000017">exception</a>&nbsp;&nbsp;
+      <a href="#M000016">fatal</a>&nbsp;&nbsp;
+      <a href="#M000013">info</a>&nbsp;&nbsp;
+      <a href="#M000011">log</a>&nbsp;&nbsp;
+      <a href="#M000014">warn</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">logger</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc">
+Where data is logged to, must respond to puts. See <a
+href="Puts.html">Log::Puts</a>.
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
+
+        <div class="method-heading">
+          <a href="#M000012" class="method-signature">
+          <span class="method-name">debug</span><span class="method-args">(text, data=nil, flags=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+See Log::debug Uses @logger || $stderr as logging device.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000012-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000012-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/comfort.rb, line 50</span>
+50:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">debug</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">data</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">flags</span>=<span class="ruby-keyword kw">nil</span>)
+51:         (<span class="ruby-ivar">@logger</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">$stderr</span>).<span class="ruby-identifier">puts</span>(
+52:           <span class="ruby-operator">::</span><span class="ruby-constant">SilverPlatter</span><span class="ruby-operator">::</span><span class="ruby-constant">Log</span><span class="ruby-operator">::</span><span class="ruby-constant">Entry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">text</span>.<span class="ruby-identifier">to_str</span>, <span class="ruby-identifier">:debug</span>, <span class="ruby-identifier">caller</span>(<span class="ruby-value">1</span>), <span class="ruby-identifier">data</span>, <span class="ruby-identifier">flags</span>)
+53:         )
+54:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+          <a href="#M000015" class="method-signature">
+          <span class="method-name">error</span><span class="method-args">(text, data=nil, flags=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+See Log::error Uses @logger || $stderr as logging device.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000015-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000015-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/comfort.rb, line 74</span>
+74:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">error</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">data</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">flags</span>=<span class="ruby-keyword kw">nil</span>)
+75:         (<span class="ruby-ivar">@logger</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">$stderr</span>).<span class="ruby-identifier">puts</span>(
+76:           <span class="ruby-operator">::</span><span class="ruby-constant">SilverPlatter</span><span class="ruby-operator">::</span><span class="ruby-constant">Log</span><span class="ruby-operator">::</span><span class="ruby-constant">Entry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">text</span>.<span class="ruby-identifier">to_str</span>, <span class="ruby-identifier">:error</span>, <span class="ruby-identifier">caller</span>(<span class="ruby-value">1</span>), <span class="ruby-identifier">data</span>, <span class="ruby-identifier">flags</span>)
+77:         )
+78:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000017" class="method-detail">
+        <a name="M000017"></a>
+
+        <div class="method-heading">
+          <a href="#M000017" class="method-signature">
+          <span class="method-name">exception</span><span class="method-args">(e, data=nil, flags=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+See Log::exception <a href="Comfort.html#M000017">Comfort#exception</a>
+uses @logger || $stderr as logging device. <a
+href="Comfort.html#M000017">Comfort#exception</a> will try to forward it to
+the logging device&#8216;s <a href="Comfort.html#M000017">exception</a>
+method, if that can&#8216;t be done it
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000017-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000017-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/comfort.rb, line 92</span>
+92:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exception</span>(<span class="ruby-identifier">e</span>, <span class="ruby-identifier">data</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">flags</span>=<span class="ruby-keyword kw">nil</span>)
+93:         <span class="ruby-identifier">flags</span> <span class="ruby-operator">||=</span> []
+94:         <span class="ruby-identifier">flags</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">:exception</span>
+95:         (<span class="ruby-ivar">@logger</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">$stderr</span>).<span class="ruby-identifier">puts</span>(
+96:           <span class="ruby-operator">::</span><span class="ruby-constant">SilverPlatter</span><span class="ruby-operator">::</span><span class="ruby-constant">Log</span><span class="ruby-operator">::</span><span class="ruby-constant">Entry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">e</span>.<span class="ruby-identifier">backtrace</span>, [<span class="ruby-identifier">e</span>, <span class="ruby-identifier">data</span>], <span class="ruby-identifier">flags</span>)
+97:         )
+98:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000016" class="method-detail">
+        <a name="M000016"></a>
+
+        <div class="method-heading">
+          <a href="#M000016" class="method-signature">
+          <span class="method-name">fatal</span><span class="method-args">(text, data=nil, flags=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+See Log::fatal Uses @logger || $stderr as logging device.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000016-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000016-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/comfort.rb, line 82</span>
+82:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fatal</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">data</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">flags</span>=<span class="ruby-keyword kw">nil</span>)
+83:         (<span class="ruby-ivar">@logger</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">$stderr</span>).<span class="ruby-identifier">puts</span>(
+84:           <span class="ruby-operator">::</span><span class="ruby-constant">SilverPlatter</span><span class="ruby-operator">::</span><span class="ruby-constant">Log</span><span class="ruby-operator">::</span><span class="ruby-constant">Entry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">text</span>.<span class="ruby-identifier">to_str</span>, <span class="ruby-identifier">:fatal</span>, <span class="ruby-identifier">caller</span>(<span class="ruby-value">1</span>), <span class="ruby-identifier">data</span>, <span class="ruby-identifier">flags</span>)
+85:         )
+86:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
+
+        <div class="method-heading">
+          <a href="#M000013" class="method-signature">
+          <span class="method-name">info</span><span class="method-args">(text, data=nil, flags=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+See Log::info Uses @logger || $stderr as logging device.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000013-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000013-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/comfort.rb, line 58</span>
+58:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">info</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">data</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">flags</span>=<span class="ruby-keyword kw">nil</span>)
+59:         (<span class="ruby-ivar">@logger</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">$stderr</span>).<span class="ruby-identifier">puts</span>(
+60:           <span class="ruby-operator">::</span><span class="ruby-constant">SilverPlatter</span><span class="ruby-operator">::</span><span class="ruby-constant">Log</span><span class="ruby-operator">::</span><span class="ruby-constant">Entry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">text</span>.<span class="ruby-identifier">to_str</span>, <span class="ruby-identifier">:info</span>, <span class="ruby-identifier">caller</span>(<span class="ruby-value">1</span>), <span class="ruby-identifier">data</span>, <span class="ruby-identifier">flags</span>)
+61:         )
+62:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
+
+        <div class="method-heading">
+          <a href="#M000011" class="method-signature">
+          <span class="method-name">log</span><span class="method-args">(text, severity=:info, data=nil, flags=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+See Log::log <a href="Comfort.html#M000011">Comfort#log</a> uses @logger ||
+$stderr as logging device.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000011-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000011-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/comfort.rb, line 42</span>
+42:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">log</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">severity</span>=<span class="ruby-identifier">:info</span>, <span class="ruby-identifier">data</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">flags</span>=<span class="ruby-keyword kw">nil</span>)
+43:         (<span class="ruby-ivar">@logger</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">$stderr</span>).<span class="ruby-identifier">puts</span>(
+44:           <span class="ruby-operator">::</span><span class="ruby-constant">SilverPlatter</span><span class="ruby-operator">::</span><span class="ruby-constant">Log</span><span class="ruby-operator">::</span><span class="ruby-constant">Entry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">text</span>.<span class="ruby-identifier">to_str</span>, <span class="ruby-identifier">severity</span>, <span class="ruby-identifier">caller</span>(<span class="ruby-value">1</span>), <span class="ruby-identifier">data</span>, <span class="ruby-identifier">flags</span>)
+45:         )
+46:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
+
+        <div class="method-heading">
+          <a href="#M000014" class="method-signature">
+          <span class="method-name">warn</span><span class="method-args">(text, data=nil, flags=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+See Log::warn Uses @logger || $stderr as logging device.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000014-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000014-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/comfort.rb, line 66</span>
+66:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">warn</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">data</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">flags</span>=<span class="ruby-keyword kw">nil</span>)
+67:         (<span class="ruby-ivar">@logger</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">$stderr</span>).<span class="ruby-identifier">puts</span>(
+68:           <span class="ruby-operator">::</span><span class="ruby-constant">SilverPlatter</span><span class="ruby-operator">::</span><span class="ruby-constant">Log</span><span class="ruby-operator">::</span><span class="ruby-constant">Entry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">text</span>.<span class="ruby-identifier">to_str</span>, <span class="ruby-identifier">:warn</span>, <span class="ruby-identifier">caller</span>(<span class="ruby-value">1</span>), <span class="ruby-identifier">data</span>, <span class="ruby-identifier">flags</span>)
+69:         )
+70:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

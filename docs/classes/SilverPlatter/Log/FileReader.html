@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: SilverPlatter::Log::FileReader</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">SilverPlatter::Log::FileReader</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/lib/silverplatter/log/filereader_rb.html">
+                lib/silverplatter/log/filereader.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                <a href="../../Object.html">
+                Object
+               </a>
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h2>Summary</h2>
+<p>
+Log::Reader provides facilities to read and filter logfiles in the standard
+serialized format.
+</p>
+<h2>Synopsis</h2>
+<pre>
+  require 'silverplatter/log/filereader'
+  reader = SilverPlatter::Log::FileReader.new('my.log')
+  reader.filter_by
+</pre>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000048">clear_filters</a>&nbsp;&nbsp;
+      <a href="#M000045">def_filter</a>&nbsp;&nbsp;
+      <a href="#M000052">each</a>&nbsp;&nbsp;
+      <a href="#M000047">filter_by</a>&nbsp;&nbsp;
+      <a href="#M000050">head</a>&nbsp;&nbsp;
+      <a href="#M000049">matches</a>&nbsp;&nbsp;
+      <a href="#M000046">new</a>&nbsp;&nbsp;
+      <a href="#M000051">tail</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name">Enumerable</span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000045" class="method-detail">
+        <a name="M000045"></a>
+
+        <div class="method-heading">
+          <a href="#M000045" class="method-signature">
+          <span class="method-name">def_filter</span><span class="method-args">(name, &amp;filter)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Define a filter. The first argument it gets is the entry, all others are
+the arguments as passed in to filter down
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000045-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000045-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/filereader.rb, line 27</span>
+27:       <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">def_filter</span>(<span class="ruby-identifier">name</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">filter</span>)
+28:         <span class="ruby-constant">Filters</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">filter</span>
+29:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000046" class="method-detail">
+        <a name="M000046"></a>
+
+        <div class="method-heading">
+          <a href="#M000046" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(path, filters=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+create a <a href="FileReader.html#M000046">new</a> <a
+href="FileReader.html">Log::FileReader</a>, opening the file specified by
+the path argument.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000046-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000046-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/filereader.rb, line 32</span>
+32:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">filters</span>=<span class="ruby-keyword kw">nil</span>)
+33:         <span class="ruby-ivar">@file</span>    = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">path</span>, <span class="ruby-value str">&quot;rb&quot;</span>)
+34:         <span class="ruby-ivar">@pos</span>     = <span class="ruby-value">0</span>
+35:         <span class="ruby-ivar">@filters</span> = <span class="ruby-identifier">filters</span>
+36:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000048" class="method-detail">
+        <a name="M000048"></a>
+
+        <div class="method-heading">
+          <a href="#M000048" class="method-signature">
+          <span class="method-name">clear_filters</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Remove all applied filters.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000048-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000048-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/filereader.rb, line 55</span>
+55:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">clear_filters</span>
+56:         <span class="ruby-ivar">@filters</span>.<span class="ruby-identifier">clear</span>
+57:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000052" class="method-detail">
+        <a name="M000052"></a>
+
+        <div class="method-heading">
+          <a href="#M000052" class="method-signature">
+          <span class="method-name">each</span><span class="method-args">() {|entry| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000052-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000052-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/silverplatter/log/filereader.rb, line 97</span>
+ 97:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each</span>
+ 98:         <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">line</span> = <span class="ruby-ivar">@file</span>.<span class="ruby-identifier">gets</span>
+ 99:           <span class="ruby-ivar">@pos</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+100:           <span class="ruby-identifier">entry</span> = <span class="ruby-constant">Log</span><span class="ruby-operator">::</span><span class="ruby-constant">Entry</span>.<span class="ruby-identifier">deserialize</span>(<span class="ruby-identifier">line</span>)
+101:           <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">entry</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">matches</span>(<span class="ruby-identifier">entry</span>)
+102:         <span class="ruby-keyword kw">end</span>
+103:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000047" class="method-detail">
+        <a name="M000047"></a>
+
+        <div class="method-heading">
+          <a href="#M000047" class="method-signature">
+          <span class="method-name">filter_by</span><span class="method-args">(*args, &amp;filter)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <h3>Summary</h3>
+<p>
+Only show matching entries.
+</p>
+<h3>Synopsis</h3>
+<pre>
+  reader
+</pre>
+<h3>Description</h3>
+<p>
+you can either filter by a name or using a block. By a name it will use the
+stored filter with the given name from Log::FileReader::Filters
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000047-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000047-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/filereader.rb, line 48</span>
+48:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">filter_by</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">filter</span>)
+49:         <span class="ruby-identifier">filter</span> = <span class="ruby-constant">Filters</span>[<span class="ruby-identifier">args</span>.<span class="ruby-identifier">shift</span>] <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">filter</span>
+50:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Unknown Filter #{name} and no block given&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">filter</span>
+51:         <span class="ruby-ivar">@filters</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">filter</span>, <span class="ruby-identifier">args</span>]
+52:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000050" class="method-detail">
+        <a name="M000050"></a>
+
+        <div class="method-heading">
+          <a href="#M000050" class="method-signature">
+          <span class="method-name">head</span><span class="method-args">(n) {|entry| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Read the first N entries that match the filtering.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000050-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000050-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/filereader.rb, line 65</span>
+65:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">head</span>(<span class="ruby-identifier">n</span>)
+66:         <span class="ruby-identifier">i</span> = <span class="ruby-value">0</span>
+67:         <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">line</span> = <span class="ruby-ivar">@file</span>.<span class="ruby-identifier">gets</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">n</span>
+68:           <span class="ruby-ivar">@pos</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+69:           <span class="ruby-identifier">entry</span> = <span class="ruby-constant">Log</span><span class="ruby-operator">::</span><span class="ruby-constant">Entry</span>.<span class="ruby-identifier">deserialize</span>(<span class="ruby-identifier">line</span>)
+70:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">matches</span>(<span class="ruby-identifier">entry</span>) <span class="ruby-keyword kw">then</span>
+71:             <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">entry</span>)
+72:             <span class="ruby-identifier">i</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>
+73:           <span class="ruby-keyword kw">end</span>
+74:         <span class="ruby-keyword kw">end</span>
+75:         <span class="ruby-identifier">entries</span>
+76:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000049" class="method-detail">
+        <a name="M000049"></a>
+
+        <div class="method-heading">
+          <a href="#M000049" class="method-signature">
+          <span class="method-name">matches</span><span class="method-args">(entry)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Test whether a given entry <a href="FileReader.html#M000049">matches</a>
+the current filtering.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000049-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000049-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/filereader.rb, line 60</span>
+60:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">matches</span>(<span class="ruby-identifier">entry</span>)
+61:         <span class="ruby-ivar">@filters</span>.<span class="ruby-identifier">all?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">filter</span><span class="ruby-operator">|</span> <span class="ruby-identifier">filter</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">entry</span>) }
+62:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000051" class="method-detail">
+        <a name="M000051"></a>
+
+        <div class="method-heading">
+          <a href="#M000051" class="method-signature">
+          <span class="method-name">tail</span><span class="method-args">(n, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Read the last N entries that match the filtering. TODO: do a tailread.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000051-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000051-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/silverplatter/log/filereader.rb, line 80</span>
+80:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tail</span>(<span class="ruby-identifier">n</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+81:         <span class="ruby-identifier">entries</span> = []
+82:         <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">line</span> = <span class="ruby-ivar">@file</span>.<span class="ruby-identifier">gets</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">entries</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">n</span>
+83:           <span class="ruby-ivar">@pos</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+84:           <span class="ruby-identifier">entry</span> = <span class="ruby-constant">Log</span><span class="ruby-operator">::</span><span class="ruby-constant">Entry</span>.<span class="ruby-identifier">deserialize</span>(<span class="ruby-identifier">line</span>)
+85:           <span class="ruby-identifier">entries</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">entry</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">matches</span>(<span class="ruby-identifier">entry</span>)
+86:         <span class="ruby-keyword kw">end</span>
+87:         <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">line</span> = <span class="ruby-ivar">@file</span>.<span class="ruby-identifier">gets</span>
+88:           <span class="ruby-ivar">@pos</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+89:           <span class="ruby-identifier">entry</span> = <span class="ruby-constant">Log</span><span class="ruby-operator">::</span><span class="ruby-constant">Entry</span>.<span class="ruby-identifier">deserialize</span>(<span class="ruby-identifier">line</span>)
+90:           <span class="ruby-identifier">entries</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">entry</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">matches</span>(<span class="ruby-identifier">entry</span>)
+91:           <span class="ruby-identifier">entries</span>.<span class="ruby-identifier">shift</span>
+92:         <span class="ruby-keyword kw">end</span>
+93:         <span class="ruby-identifier">entries</span>.<span class="ruby-identifier">compact</span>
+94:         <span class="ruby-identifier">entries</span>.<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+95:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
