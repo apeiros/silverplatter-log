@@ -3,11 +3,7 @@
 /coverage
 /conflicts
 /unversioned
-/trunk/docs
-/trunk/pkg
-/trunk/web
-/silverplatter-irc.xcodeproj
 /build/
-/docs
-/pkg
-/web
+/docs/
+/pkg/
+/web/
