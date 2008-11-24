@@ -29,21 +29,21 @@ module SilverPlatter
 			def puts(*objs) # :nodoc:
 				for obj in objs
 					case obj
-						when ::Silverplatter::Log::Entry
+						when ::SilverPlatter::Log::Entry
 							log_entry(obj)
 						when ::Exception
-							log_entry(::Silverplatter::Log::Entry.new(
+							log_entry(::SilverPlatter::Log::Entry.new(
 								obj.message, :error, obj.backtrace, [obj], %w'exception'
 							))
 						when ::String
-							log_entry(::Silverplatter::Log::Entry.new(
+							log_entry(::SilverPlatter::Log::Entry.new(
 								obj.chomp, (@severity || :info), caller(1), nil, %w'puts'
 							))
 						else
 							if obj.log_entry? then
 								log_entry(obj)
 							else
-								log_entry(::Silverplatter::Log::Entry.new(
+								log_entry(::SilverPlatter::Log::Entry.new(
 									obj.to_s.chomp, (@severity || :info), caller(1), nil, %w'puts'
 								))
 							end
