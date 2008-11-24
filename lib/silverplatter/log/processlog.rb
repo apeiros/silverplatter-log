@@ -14,7 +14,7 @@ module SilverPlatter
 	module Log
 		# Log.to_process is equivalent to Log::ProcessLog.new
 		def self.to_process(*args)
-			Log::IOLog.new(*args)
+			Log::ProcessLog.new(*args)
 		end
 	
 		# == Summary
