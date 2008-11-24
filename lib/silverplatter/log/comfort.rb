@@ -90,10 +90,8 @@ module SilverPlatter
 			# Comfort#exception will try to forward it to the logging device's
 			# #exception method, if that can't be done it 
 			def exception(e, data=nil, flags=nil)
-				flags ||= []
-				flags << :exception
 				(@logger || $stderr).puts(
-					::SilverPlatter::Log::Entry.new(e.message, e.backtrace, [e, data], flags)
+					::SilverPlatter::Log::Entry.new(e.message, :error, e.backtrace, [e, data], flags)
 				)
 			end
 		end # Comfort
