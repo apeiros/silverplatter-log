@@ -7,6 +7,7 @@
 
 
 require 'silverplatter/log'
+require 'silverplatter/log/essentials'
 
 
 
