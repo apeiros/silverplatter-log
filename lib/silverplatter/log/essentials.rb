@@ -18,6 +18,23 @@ module SilverPlatter
 		RecordTerminator = "\n".freeze   # :nodoc:
 		EmptyString      = "".freeze     # :nodoc:
 		
+		ColoredDebugConsole   = Formatter.new({
+			:debug => proc { |e|
+				"\e[46m\e[30m\e[1m DEBUG \e[0m #{e.time.strftime('%a %H:%M:%S')}: #{e.text} in #{e.origin.first}"
+			},
+			:info  => proc { |e|
+				"\e[44m\e[30m\e[1m INFO  \e[0m #{e.time.strftime('%a %H:%M:%S')}: #{e.text} in #{e.origin.first}"
+			},
+			:warn  => proc { |e|
+				"\e[43m\e[30m\e[1m WARN  \e[0m #{e.time.strftime('%a %H:%M:%S')}: #{e.text} in #{e.origin.first}"
+			},
+			:error => proc { |e|
+				"\e[41m\e[30m\e[1m ERROR \e[0m #{e.time.strftime('%a %H:%M:%S')}: #{e.text} in\n  #{e.origin.join("\n  ")}"
+			},
+			:fatal => proc { |e|
+				"\e[5m\e[41m\e[30m\e[1m FATAL \e[0m #{e.time.strftime('%a %H:%M:%S')}: #{e.text} in\n  #{e.origin.join("\n  ")}"
+			},
+		})
 		ColoredConsole   = Formatter.new({
 			:debug => proc { |e|
 				"\e[46m\e[30m\e[1m DEBUG \e[0m #{e.time.strftime('%a %H:%M:%S')}: #{e.text} in #{e.origin.first}"
