@@ -18,6 +18,7 @@ module SilverPlatter
 		RecordTerminator = "\n".freeze   # :nodoc:
 		EmptyString      = "".freeze     # :nodoc:
 		
+		# print color codes for log level, print whole backtrace on error and fatal.
 		ColoredDebugConsole   = Formatter.new({
 			:debug => proc { |e|
 				"\e[46m\e[30m\e[1m DEBUG \e[0m #{e.time.strftime('%a %H:%M:%S')}: #{e.text} in #{e.origin.first}"
