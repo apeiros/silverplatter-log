@@ -25,7 +25,7 @@ module SilverPlatter
 			# See the class description for a synopsis
 			def initialize(levels=nil, &generic)
 				raise ArgumentError, "Needs a block or an argument" unless levels or generic
-				@formatters = Hash.new(generic).merge(levels || {})
+				@formatters = Hash.new(&generic).merge(levels || {})
 			end
 
 			# Format an entry according to this formatter
