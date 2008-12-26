@@ -52,4 +52,4 @@ end  # namespace :spec
 desc 'Alias to spec:run'
 task :spec => 'spec:run'
 
-task :clobber => 'spec:clobber'
+#task :clobber => 'spec:clobber' # FIXME: investigate what spec:clobber should have done
