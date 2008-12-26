@@ -25,6 +25,7 @@ module SilverPlatter
 		# calls.
 		#
 		# == Synopsis
+		#   # WARNING: don't change $stdout/$stderr in irb, it will cause problems!
 		#   require 'silverplatter/log/collector'
 		#   include SilverPlatter
 		#   $stderr = Log::Collector.new(Log::ConsoleLog.new(STDERR))

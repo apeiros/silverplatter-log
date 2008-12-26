@@ -23,6 +23,7 @@ module SilverPlatter
 		# Logs data colored to STDOUT
 		#
 		# === Synopsis
+		#   # WARNING: don't change $stdout/$stderr in irb, it will cause problems!
 		#   require 'silverplatter/log/consolelog'
 		#   require 'silverplatter/log/collector'
 		#   include SilverPlatter
