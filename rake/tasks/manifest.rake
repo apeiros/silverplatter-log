@@ -14,6 +14,25 @@ namespace :manifest do
 		Project.manifest.file ||= Project.meta.manifest
 		Project.manifest.__finalize__
 	end
+	
+	# an assertin task for other tasks
+	task :assert => :prerequisite do
+		files   = manifest()
+		cands   = manifest_candidates()
+		missing = files-cands
+		added   = cands-files
+
+		unless missing.empty? and added.empty? then
+			puts "Files don't match manifest, either manifest is out of date or project is polluted"
+			puts added.sort.map { |f|
+				"\e[32m+#{f}\e[0m"
+			}
+			puts missing.sort.map { |f|
+				"\e[31m-#{f}\e[0m"
+			}
+			exit 1
+		end
+	end
 
 	desc 'Verify the manifest'
 	task :check => :prerequisite do
@@ -22,7 +41,6 @@ namespace :manifest do
 		missing = files-cands
 		added   = cands-files
 
-		puts "#{Project.manifest.file.inspect}:"
 		puts added.sort.map { |f|
 			"\e[32m+#{f}\e[0m"
 		}
