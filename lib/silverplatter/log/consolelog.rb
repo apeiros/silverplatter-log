@@ -26,7 +26,7 @@ module SilverPlatter
 		#   require 'silverplatter/log/consolelog'
 		#   require 'silverplatter/log/collector'
 		#   include SilverPlatter
-		#   # Log.collect is required due to the #write method
+		#   # Log.collect is required due to the #write method
 		#   $stdout = Log.collect(Log.to_console)
 		#   $stderr = Log.collect($stdout, :warn)
 		#   warn "foo"
